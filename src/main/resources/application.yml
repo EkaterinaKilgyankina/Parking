@@ -1,0 +1,24 @@
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 1
+      maximum-pool-size: 10
+      pool-name: ${spring.application.name}-pool
+    username: test
+    password: 111
+    url: jdbc:postgresql://localhost:5432/test
+  application:
+    name: parking
+
+  liquibase:
+    change-log: classpath:/liquibase-changelog.yaml
+    enabled: true
+server:
+  port: 8080

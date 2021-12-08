@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - logicalFilePath: liquibase-changelog.yaml
-  - includeAll:
-      path: /scripts
-      errorIfMissingorEmpty: true

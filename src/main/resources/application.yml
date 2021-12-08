@@ -17,8 +17,9 @@ spring:
   application:
     name: parking
 
-  liquibase:
-    change-log: classpath:/liquibase-changelog.yaml
-    enabled: true
+
+
+
+
 server:
   port: 8080

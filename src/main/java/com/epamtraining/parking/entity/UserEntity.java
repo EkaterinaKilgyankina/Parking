@@ -3,6 +3,8 @@ package com.epamtraining.parking.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Table(name = "user", schema = "public")
@@ -17,11 +19,13 @@ public class UserEntity {
 
     @Column
     private String password;
-/*
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name =  "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<RoleEntity> role;
-*/
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
+
 }

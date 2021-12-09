@@ -1,6 +1,18 @@
 package com.epamtraining.parking.entity;
 
-public enum RoleEntity {
-    ROLE_USER,
-    ROLE_ADMIN
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Entity
+@Data
+@Table(name =  "role")
+public class RoleEntity {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
 }

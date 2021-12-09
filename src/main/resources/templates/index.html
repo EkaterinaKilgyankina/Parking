@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated()">
+    Welcome <b><span sec:authentication="name">Username</span></b>
+    &nbsp;
+    <i><span sec:authentication="principal.authorities">Roles</span></i>
+</div>
+    <h1>Hello world</h1>
+<div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+    <a href="booking"> Check spots</a>
+</div>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout" />
+</form>
+</body>
+</html>

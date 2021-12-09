@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Parking Spots Bookings</title>
 </head>
 <body>
+<div sec:authorize="isAuthenticated()">
+Welcome <span sec:authentication="name">Email</span>
+</div>
 <h1>Welcome to Spot Booking Page</h1>
 <table>
     <tr>

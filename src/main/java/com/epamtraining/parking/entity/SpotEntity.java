@@ -1,4 +1,4 @@
-package com.epamtraining.parking.domain;
+package com.epamtraining.parking.entity;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ public class SpotEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean vacancy;
+    private String location;
 
 
 }

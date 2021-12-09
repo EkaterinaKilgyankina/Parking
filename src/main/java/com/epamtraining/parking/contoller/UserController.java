@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.entity.UserEntity;
 import com.epamtraining.parking.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

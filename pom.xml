@@ -17,7 +17,6 @@
         <java.version>11</java.version>
         <repackage.classifier/>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -120,4 +119,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    </project>
+</project>
+

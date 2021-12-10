@@ -1,12 +1,12 @@
 package com.epamtraining.parking.services;
 
+import java.util.*;
+
 import com.epamtraining.parking.entity.RoleEntity;
 import com.epamtraining.parking.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.*;
 
 public class MyUserDetails implements UserDetails {
 
@@ -18,12 +18,13 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<RoleEntity> roles = user.getRoles();
+        Collection<RoleEntity> roles = user.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        for(RoleEntity role: roles) {
+        for (RoleEntity role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
+
         return authorities;
     }
 
@@ -56,4 +57,5 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

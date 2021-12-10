@@ -74,17 +74,5 @@ INSERT INTO "spot" VALUES (8, 'A8');
 INSERT INTO "spot" VALUES (9, 'A9');
 INSERT INTO "spot" VALUES (10, 'A10');
 
-INSERT INTO "user" VALUES (1, 'Alexander', '1234');
-INSERT INTO "user" VALUES (2, 'Anton', '4567');
-
 INSERT INTO "role" VALUES (1, 'ROLE_USER');
 INSERT INTO "role" VALUES (2, 'ROLE_ADMIN');
-
-INSERT INTO "user_roles" VALUES (1, 2);
-INSERT INTO "user_roles" VALUES (2, 1);
-
-INSERT INTO "car" VALUES (1, 2, 'A456BC');
-INSERT INTO "car" VALUES (2, 1, 'D789AE');
-
-INSERT INTO "booking" VALUES (1, 2, 8, '2021-12-20 15:20:00', '2021-12-20 17:00:00');
-INSERT INTO "booking" VALUES (2, 1, 4, '2021-12-21 16:40:00', '2021-12-22 19:20:00');

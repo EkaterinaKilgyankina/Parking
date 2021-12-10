@@ -3,6 +3,7 @@ package com.epamtraining.parking.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +15,10 @@ public class UserEntity {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -26,6 +27,9 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<RoleEntity> roles = new HashSet<>();
+    private Collection<RoleEntity> roles;
 
+    public void addRole(RoleEntity role) {
+        this.roles.add(role);
+    }
 }

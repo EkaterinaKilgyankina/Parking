@@ -6,13 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name =  "role")
+@Table(name =  "role", schema = "public")
 public class RoleEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 }

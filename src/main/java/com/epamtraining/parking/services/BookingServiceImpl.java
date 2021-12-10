@@ -35,8 +35,8 @@ public class BookingServiceImpl implements BookingService {
         SpotEntity spot = spotRepositoty.getById(request.getSpotId());
         bookingEntity.setSpotEntity(spot);
         bookingEntity.setCarEntity(car);
-        bookingEntity.setFrom(request.getFrom());
-        bookingEntity.setTo(request.getTo());
+        bookingEntity.setBookingFrom(request.getFrom());
+        bookingEntity.setBookingTo(request.getTo());
         return bookingRepository.save(bookingEntity);
 
     }

@@ -1,7 +1,6 @@
 package com.epamtraining.parking.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,9 +17,9 @@ public class BookingEntity {
     //    private long carId;
     //    private long spotId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
-    private LocalDateTime from;
+    private LocalDateTime bookingFrom;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
-    private LocalDateTime to;
+    private LocalDateTime bookingTo;
 
     @OneToOne // что будет если удалю бронирование?
     @JoinColumn(name = "carId", referencedColumnName = "id")

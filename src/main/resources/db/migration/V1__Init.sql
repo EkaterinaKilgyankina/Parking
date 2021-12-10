@@ -9,12 +9,13 @@ CREATE TABLE "car"
 (
     "id"         bigserial PRIMARY KEY,
     "user_id"    bigint NOT NULL,
-    "number" text   NOT NULL
+    "booking_id" bigint,
+    "number"     text   NOT NULL
 );
 
 CREATE TABLE "spot"
 (
-    "id"   bigserial PRIMARY KEY,
+    "id"      bigserial PRIMARY KEY,
     "vacancy" boolean NOT NULL
 );
 
@@ -23,12 +24,14 @@ CREATE TABLE "booking"
     "id"      bigserial PRIMARY KEY,
     "car_id"  bigint    not null,
     "spot_id" bigint    not null,
-    "from"    timestamp NOT null,
-    "to"      timestamp NOT NULL
+    "booking_from"    timestamp NOT null,
+    "booking_to"      timestamp NOT NULL
 );
 
 alter TABLE "car"
     add constraint car_user_id_fkey foreign key (user_id) references "user" (id);
+alter TABLE "car"
+    add constraint car_booking_id_fkey foreign key (booking_id) references "booking" (id);
 alter TABLE "booking"
     add constraint booking_car_id_fkey foreign key (car_id) references "car" (id);
 alter TABLE "booking"

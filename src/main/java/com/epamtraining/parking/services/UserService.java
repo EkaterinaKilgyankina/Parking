@@ -5,6 +5,7 @@ import com.epamtraining.parking.entity.UserEntity;
 import java.util.List;
 
 public interface UserService {
+
     UserEntity createUser (UserEntity user);
 
     public List<UserEntity> getAll();

@@ -1,12 +1,9 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.entity.UserEntity;
-import com.epamtraining.parking.repository.RoleRepository;
+import com.epamtraining.parking.domain.UserEntity;
 import com.epamtraining.parking.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

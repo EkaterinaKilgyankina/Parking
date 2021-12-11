@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Data
 public class Booking {
     private Long id;
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime bookingFrom;
+    private LocalDateTime bookingTo;
     private Car car;
     private Spot spot;
 }

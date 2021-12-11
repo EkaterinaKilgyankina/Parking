@@ -1,4 +1,4 @@
-package com.epamtraining.parking.repository.impl;
+package com.epamtraining.parking.repository;
 
 import com.epamtraining.parking.domain.SpotEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

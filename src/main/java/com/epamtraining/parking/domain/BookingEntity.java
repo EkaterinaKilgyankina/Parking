@@ -1,4 +1,4 @@
-package com.epamtraining.parking.entity;
+package com.epamtraining.parking.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

@@ -1,10 +1,9 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.entity.UserEntity;
+import com.epamtraining.parking.domain.UserEntity;
 import com.epamtraining.parking.repository.UserRepository;
-import com.epamtraining.parking.services.UserServiceImpl;
+import com.epamtraining.parking.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 

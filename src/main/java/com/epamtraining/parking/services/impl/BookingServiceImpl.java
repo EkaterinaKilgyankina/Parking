@@ -2,20 +2,24 @@ package com.epamtraining.parking.services.impl;
 
 import com.epamtraining.parking.domain.BookingEntity;
 import com.epamtraining.parking.domain.CarEntity;
+import com.epamtraining.parking.domain.SpotBooking;
 import com.epamtraining.parking.domain.SpotEntity;
 import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.repository.BookingRepository;
 import com.epamtraining.parking.repository.CarRepository;
-import com.epamtraining.parking.repository.SpotRepositoty;
+import com.epamtraining.parking.repository.SpotRepository;
 import com.epamtraining.parking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 class BookingServiceImpl implements BookingService {
@@ -24,7 +28,14 @@ class BookingServiceImpl implements BookingService {
     @Autowired
     private CarRepository carRepository;
     @Autowired
-    private SpotRepositoty spotRepositoty;
+    private SpotRepository spotRepository;
+
+    @Autowired
+    public BookingServiceImpl(SpotRepository spotRepository, CarRepository carRepository, BookingRepository bookingRepository) {
+        this.spotRepository = spotRepository;
+        this.carRepository = carRepository;
+        this.bookingRepository = bookingRepository;
+    }
 
     @Override
     public List<BookingEntity> getAll() {
@@ -39,7 +50,7 @@ class BookingServiceImpl implements BookingService {
     @Override
     @Transactional // если больше 1 запросов на запись в базу
     public BookingEntity createBooking(BookingRequest request) {
-        SpotEntity spot = spotRepositoty.findById(request.getSpotNumber())
+        SpotEntity spot = spotRepository.findById(request.getSpotNumber())
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 
         if (spot.getBookingEntity() != null) {
@@ -59,7 +70,7 @@ class BookingServiceImpl implements BookingService {
                 .setBookingFrom(request.getFrom())
                 .setBookingTo(request.getFrom().plusMinutes(request.getDuration()));
 
-        spotRepositoty.save(spot.setBookingEntity(booking));
+        spotRepository.save(spot.setBookingEntity(booking));
 
         return bookingRepository.save(booking);
     }
@@ -79,6 +90,32 @@ class BookingServiceImpl implements BookingService {
 //        SpotEntity byBookingEntity_id = spotRepositoty.findByBookingEntity_Id(id);
 //        byBookingEntity_id.getBookingEntity().setId(0L);
         bookingRepository.deleteById(id);
+    }
+
+    // TODO shows spot bookings based on period of time
+    public List<SpotBooking> getSpotBookingsForTimePeriod() {
+        Iterable<SpotEntity> spots = this.spotRepository.findAll();
+        Map<Long, SpotBooking> spotBookingMap = new HashMap<>();
+        spots.forEach(spot -> {
+            SpotBooking spotBooking = new SpotBooking();
+            spotBooking.setLocation(spot.getLocation());
+            spotBookingMap.put(spot.getId(), spotBooking);
+        });
+        Iterable<BookingEntity> bookings = this.bookingRepository.findAll();
+        bookings.forEach(booking -> {
+            //SpotBooking spotBooking = spotBookingMap.get(booking.getSpotId());
+            //spotBooking.setFrom(from);
+            //spotBooking.setTo(to);
+            //CarEntity car = this.carRepository.findById(booking.getCarId()).get();
+            //spotBooking.setNumber(car.getNumber());
+        });
+
+        List<SpotBooking> spotBookings = new ArrayList<>();
+        for(Long id: spotBookingMap.keySet()) {
+            spotBookings.add(spotBookingMap.get(id));
+        }
+
+        return spotBookings;
     }
 
 

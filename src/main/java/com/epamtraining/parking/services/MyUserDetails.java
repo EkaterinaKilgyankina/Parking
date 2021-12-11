@@ -2,8 +2,8 @@ package com.epamtraining.parking.services;
 
 import java.util.*;
 
-import com.epamtraining.parking.entity.RoleEntity;
-import com.epamtraining.parking.entity.UserEntity;
+import com.epamtraining.parking.domain.RoleEntity;
+import com.epamtraining.parking.domain.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

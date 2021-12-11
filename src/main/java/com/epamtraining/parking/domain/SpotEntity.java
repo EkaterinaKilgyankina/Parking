@@ -21,6 +21,7 @@ public class SpotEntity {
     @JoinColumn(name = "bookingId", referencedColumnName = "id")
     @JsonIgnore
     private BookingEntity bookingEntity;
+
     private String location;
 
 

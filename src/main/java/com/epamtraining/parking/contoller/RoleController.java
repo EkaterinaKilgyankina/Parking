@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.entity.RoleEntity;
+import com.epamtraining.parking.domain.RoleEntity;
 import com.epamtraining.parking.services.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

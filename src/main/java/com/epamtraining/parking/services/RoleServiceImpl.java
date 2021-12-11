@@ -1,11 +1,10 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.entity.RoleEntity;
+import com.epamtraining.parking.domain.RoleEntity;
 import com.epamtraining.parking.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

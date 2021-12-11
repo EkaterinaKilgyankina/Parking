@@ -1,34 +1,30 @@
 package com.epamtraining.parking.contoller;
 
 import com.epamtraining.parking.domain.UserEntity;
-import com.epamtraining.parking.services.UserServiceImpl;
+import com.epamtraining.parking.repository.UserRepository;
+import com.epamtraining.parking.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
 
-    private UserService userService;
-
-
+    @Autowired
+    public UserController(UserServiceImpl userService, UserRepository userRepository) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
 
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @PostMapping
-    public UserEntity registration(@RequestBody UserEntity user) {
-
     }
 
     @GetMapping

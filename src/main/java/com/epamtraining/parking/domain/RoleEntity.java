@@ -1,4 +1,4 @@
-package com.epamtraining.parking.entity;
+package com.epamtraining.parking.domain;
 
 import lombok.Data;
 

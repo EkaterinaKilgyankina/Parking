@@ -1,6 +1,6 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.entity.RoleEntity;
+import com.epamtraining.parking.domain.RoleEntity;
 
 import java.util.List;
 

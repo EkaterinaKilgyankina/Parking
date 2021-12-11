@@ -35,3 +35,4 @@ alter TABLE "booking"
     add constraint booking_car_id_fkey foreign key (car_id) references "car" (id);
 alter TABLE "booking"
     add constraint booking_spot_id_fkey foreign key (spot_id) references "spot" (id);
+

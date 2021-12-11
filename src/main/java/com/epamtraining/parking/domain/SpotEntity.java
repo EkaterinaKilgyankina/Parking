@@ -18,11 +18,9 @@ public class SpotEntity {
     private Long id;
 
     @OneToOne
-    @JoinColumn (name = "bookingId", referencedColumnName = "id")
+    @JoinColumn(name = "bookingId", referencedColumnName = "id")
     @JsonIgnore
     private BookingEntity bookingEntity;
-
-
 
 
 }

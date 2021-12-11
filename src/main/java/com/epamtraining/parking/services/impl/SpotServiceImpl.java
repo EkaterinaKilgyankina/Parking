@@ -22,13 +22,18 @@ public class SpotServiceImpl implements SpotService {
 
     @Override
     public List<SpotEntity> getFreeSpots() {
-        return spotRepositoty.findAllByVacancyIsTrue();
+        return spotRepositoty.findAllByBookingEntityIsNull();
     }
 
     @Override
-    public List<SpotEntity> getAllSpotsByVacancy(boolean isFree) {
-        return spotRepositoty.findAllByVacancy(isFree);
+    public List<SpotEntity> getAllBookedSpots() {
+        return spotRepositoty.findAllByBookingEntityIsNotNull();
     }
+
+//    @Override
+//    public SpotEntity getSpotByBookingId(long id) {
+//        return spotRepositoty.findByBookingEntity_Id(id);
+//    }
 
 
 }

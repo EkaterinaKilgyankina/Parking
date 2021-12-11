@@ -1,14 +1,17 @@
 package com.epamtraining.parking.services;
 
 import com.epamtraining.parking.domain.SpotEntity;
+
 import java.util.List;
 
 public interface SpotService {
 
-    public List<SpotEntity> getAll();
+    List<SpotEntity> getAll();
 
-    public List<SpotEntity> getFreeSpots();
+    List<SpotEntity> getFreeSpots();
 
-    public List<SpotEntity> getAllSpotsByVacancy(boolean isFree);
+    List<SpotEntity> getAllBookedSpots();
+
+//    SpotEntity getSpotByBookingId(long id);
 
 }

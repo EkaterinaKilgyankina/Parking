@@ -13,6 +13,7 @@ import com.epamtraining.parking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -58,16 +59,26 @@ class BookingServiceImpl implements BookingService {
                 .setBookingFrom(request.getFrom())
                 .setBookingTo(request.getFrom().plusMinutes(request.getDuration()));
 
+        spotRepositoty.save(spot.setBookingEntity(booking));
+
         return bookingRepository.save(booking);
     }
 
     @Override
     public BookingEntity prolongBooking(BookingRequestForProlonging request, Long bookingId) {
-        BookingEntity bookingEntity = bookingRepository.findById(bookingId).orElseThrow(() -> new ApplicationException("Booking with requested Id does not exist"));
+        BookingEntity bookingEntity = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new ApplicationException("Booking with requested Id does not exist"));
         LocalDateTime localDateTime = bookingEntity.getBookingTo().plusMinutes(request.getDuration());
         BookingEntity bookingEntity1 = bookingEntity.setBookingTo(localDateTime);
 
         return bookingRepository.save(bookingEntity1);
+    }
+
+    @Override
+    public void deleteBooking(Long id) {
+//        SpotEntity byBookingEntity_id = spotRepositoty.findByBookingEntity_Id(id);
+//        byBookingEntity_id.getBookingEntity().setId(0L);
+        bookingRepository.deleteById(id);
     }
 
 

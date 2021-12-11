@@ -5,6 +5,8 @@ import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.services.BookingService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +37,13 @@ public class BookingController {
     public BookingEntity prolongBooking(@RequestBody @Valid BookingRequestForProlonging request
             , @PathVariable Long bookingId) {
         return bookingService.prolongBooking(request, bookingId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public @ResponseBody
+    ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
+        return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
     }
 
 }

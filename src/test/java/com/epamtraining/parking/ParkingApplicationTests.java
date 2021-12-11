@@ -5,9 +5,9 @@ import com.epamtraining.parking.domain.CarEntity;
 import com.epamtraining.parking.domain.SpotEntity;
 import com.epamtraining.parking.domain.UserEntity;
 import com.epamtraining.parking.repository.BookingRepository;
+import com.epamtraining.parking.repository.CarRepository;
 import com.epamtraining.parking.repository.SpotRepositoty;
 import com.epamtraining.parking.repository.UserRepository;
-import com.epamtraining.parking.repository.CarRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +32,7 @@ class ParkingApplicationTests {
     public static void properties(final DynamicPropertyRegistry registry) {
         PostgresContainer.properties(registry);
     }
+
     @Test
     void contextLoads() {
         final CarEntity car = new CarEntity();
@@ -42,6 +43,7 @@ class ParkingApplicationTests {
         user1.setCars(Collections.singletonList(car));
         car.setUser(user1);
         userRepository.save(user1);
+        spotRepositoty.save(new SpotEntity());
 
         try {
             final UserEntity user = userRepository.findAll().get(0);
@@ -55,13 +57,14 @@ class ParkingApplicationTests {
             spot.setBookingEntity(bookingEntity);
             carEntity.setBookingEntity(bookingEntity);
 //carRepository.save(carEntity)
+            spot.setBookingEntity(bookingEntity);
             bookingRepository.saveAndFlush(bookingEntity);
-        } catch (Exception e ) {
+            spotRepositoty.saveAndFlush(spot);
+        } catch (Exception e) {
             System.out.println("");
         }
+
+        System.out.printf("asd");
     }
-
-
-
 
 }

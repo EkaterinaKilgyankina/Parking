@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SpotRepositoty extends JpaRepository <SpotEntity, Long> {
+public interface SpotRepositoty extends JpaRepository<SpotEntity, Long> {
 
-    List<SpotEntity> findAllByVacancyIsTrue();
+    List<SpotEntity> findAllByBookingEntityIsNull();
 
-    List<SpotEntity> findAllByVacancy(boolean isFree);
+    List<SpotEntity> findAllByBookingEntityIsNotNull();
+
+//    SpotEntity findByBookingEntity_Id(long id);
+
+
 }

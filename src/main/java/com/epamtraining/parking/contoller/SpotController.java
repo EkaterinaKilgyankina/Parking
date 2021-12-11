@@ -25,8 +25,9 @@ public class SpotController {
         return spotService.getFreeSpots();
     }
 
-    @GetMapping("/allFree/{vacancy}")
-    public List<SpotEntity> getAllSpotsByVacancy(@PathVariable boolean vacancy) {
-        return spotService.getAllSpotsByVacancy(vacancy);
+    @GetMapping("/allBooked")
+    public List<SpotEntity> getAllBookedSpots() {
+        return spotService.getAllBookedSpots();
     }
+
 }

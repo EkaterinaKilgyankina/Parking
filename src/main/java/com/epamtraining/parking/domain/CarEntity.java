@@ -28,7 +28,7 @@ public class CarEntity {
     UserEntity user;
     //long userId
 
-    @OneToOne(mappedBy = "bookingEntity")
+    @OneToOne(mappedBy = "carEntity")
     @JsonIgnore
     private BookingEntity bookingEntity;
 

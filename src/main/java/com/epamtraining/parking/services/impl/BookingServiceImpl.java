@@ -1,8 +1,8 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.BookingEntity;
-import com.epamtraining.parking.domain.CarEntity;
-import com.epamtraining.parking.domain.SpotEntity;
+import com.epamtraining.parking.domain.entity.BookingEntity;
+import com.epamtraining.parking.domain.entity.CarEntity;
+import com.epamtraining.parking.domain.entity.SpotEntity;
 import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;

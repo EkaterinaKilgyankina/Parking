@@ -1,7 +1,7 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.CarEntity;
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.CarEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.CarRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.CarService;

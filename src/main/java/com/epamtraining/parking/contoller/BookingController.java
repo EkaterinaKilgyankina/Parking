@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.BookingEntity;
+import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.services.BookingService;

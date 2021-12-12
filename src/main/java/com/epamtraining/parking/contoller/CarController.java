@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.CarEntity;
+import com.epamtraining.parking.domain.entity.CarEntity;
 import com.epamtraining.parking.services.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

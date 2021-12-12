@@ -1,9 +1,8 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.domain.BookingEntity;
+import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

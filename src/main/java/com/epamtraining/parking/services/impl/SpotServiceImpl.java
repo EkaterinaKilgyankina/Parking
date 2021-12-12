@@ -1,6 +1,6 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.SpotEntity;
+import com.epamtraining.parking.domain.entity.SpotEntity;
 import com.epamtraining.parking.repository.SpotRepositoty;
 import com.epamtraining.parking.services.SpotService;
 import lombok.AllArgsConstructor;

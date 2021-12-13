@@ -1,8 +1,7 @@
 package com.epamtraining.parking.config;
 
-import com.epamtraining.parking.services.UserDetailsServiceImpl;
+import com.epamtraining.parking.services.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

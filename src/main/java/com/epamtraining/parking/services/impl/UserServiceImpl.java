@@ -41,7 +41,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity registerNewUserAccount(UserEntity user) {
 
         String userEmail = user.getEmail();
+        String password = user.getPassword();
 
+        if (!password.equals(user.getMatchingPassword())){
+            throw new RuntimeException("Passwords do not match.");
+        }
         if (userEmail == null || userEmail.length() == 0) {
             throw new RuntimeException("Field cannot be empty.");
         }
@@ -50,6 +54,9 @@ public class UserServiceImpl implements UserService {
         }
         if (emailExists(user.getEmail())) {
             throw new RuntimeException("There is an account with that email address: " + user.getEmail());
+        }
+        if(password.length() < 5) {
+            throw new RuntimeException("Password length must be more than five.");
         }
         UserEntity userNew = new UserEntity();
         userNew.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -70,6 +77,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailExists(final String email) {
-        return userRepository.findByEmail(email) != null;
+        return userRepository.getUserEntityByEmail(email) != null;
     }
 }

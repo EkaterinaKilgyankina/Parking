@@ -2,7 +2,7 @@ package com.epamtraining.parking;
 
 import com.epamtraining.parking.repository.BookingRepository;
 import com.epamtraining.parking.repository.CarRepository;
-import com.epamtraining.parking.repository.SpotRepositoty;
+import com.epamtraining.parking.repository.SpotRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ class ParkingApplicationTests {
     @Autowired
     CarRepository carRepository;
     @Autowired
-    SpotRepositoty spotRepositoty;
+    SpotRepository spotRepositoty;
     @Autowired
     UserRepository userRepository;
     @Autowired

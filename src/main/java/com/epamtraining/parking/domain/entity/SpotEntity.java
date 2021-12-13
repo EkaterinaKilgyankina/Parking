@@ -22,5 +22,7 @@ public class SpotEntity {
     @JsonIgnore
     private BookingEntity bookingEntity;
 
+    private String location;
+
 
 }

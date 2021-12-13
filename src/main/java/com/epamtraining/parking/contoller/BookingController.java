@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.entity.BookingEntity;
+import com.epamtraining.parking.domain.BookingEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.services.BookingService;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/bookings")
 public class BookingController {
     private BookingService bookingService;
-
+// TODO ИЗМЕНИТЬ РЕГИСТР РОЛЕЙ
     @GetMapping
     @RolesAllowed("{role_user,role_admin}")
     public List<BookingEntity> getAll() {

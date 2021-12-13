@@ -1,7 +1,14 @@
 package com.epamtraining.parking.repository;
 
-import com.epamtraining.parking.domain.entity.RoleEntity;
+import com.epamtraining.parking.domain.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RoleRepository extends JpaRepository<RoleEntity, String> {
+@Repository
+public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
+
+    RoleEntity findByName(String name);
+
+    @Override
+    void delete(RoleEntity role);
 }

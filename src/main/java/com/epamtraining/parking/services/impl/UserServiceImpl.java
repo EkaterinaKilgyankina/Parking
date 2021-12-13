@@ -42,6 +42,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity registerNewUserAccount(UserEntity user) {
 
+        String userEmail = user.getEmail();
+
+        if (userEmail == null || userEmail.length() == 0) {
+            throw new RuntimeException("Field cannot be empty.");
+        }
+        if(!isEmail(userEmail)) {
+            throw new RuntimeException("It is not an email.");
+        }
         if (emailExists(user.getEmail())) {
             throw new RuntimeException("There is an account with that email address: " + user.getEmail());
         }
@@ -50,6 +58,10 @@ public class UserServiceImpl implements UserService {
         userNew.setEmail(user.getEmail());
         userNew.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return userRepository.save(userNew);
+    }
+
+    private boolean isEmail(final String email) {
+        return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
     }
 
     private boolean emailExists(final String email) {

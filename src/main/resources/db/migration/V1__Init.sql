@@ -55,5 +55,5 @@ alter TABLE "booking"
 alter TABLE "booking"
     add constraint booking_spot_id_fkey foreign key (spot_id) references "spot" (id);
 
-INSERT INTO "role" VALUES (1, 'ROLE_USER');
-INSERT INTO "role" VALUES (2, 'ROLE_ADMIN');
+INSERT INTO "role" VALUES (1, 'role_user');
+INSERT INTO "role" VALUES (2, 'role_admin');

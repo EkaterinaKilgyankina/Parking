@@ -1,6 +1,6 @@
 package com.epamtraining.parking.model;
 
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import lombok.Data;
 
 @Data

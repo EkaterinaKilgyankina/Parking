@@ -1,8 +1,8 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.domain.CarEntity;
+import com.epamtraining.parking.domain.entity.CarEntity;
 
 public interface CarService {
 
-    public CarEntity createCar(CarEntity car, Long userId);
+    CarEntity createCar(CarEntity car, Long userId);
 }

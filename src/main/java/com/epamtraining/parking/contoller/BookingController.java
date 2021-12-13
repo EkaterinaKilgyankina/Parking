@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -19,16 +20,19 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping
+    @RolesAllowed("{role_user,role_admin}")
     public List<BookingEntity> getAll() {
         return bookingService.getAll();
     }
 
     @GetMapping("/{carNumber}")
+    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity getBookingByCarNumber(@PathVariable String carNumber) {
         return bookingService.getByCarNumber(carNumber);
     }
 
     @PostMapping
+    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
         return bookingService.createBooking(bookingRequest);
     }

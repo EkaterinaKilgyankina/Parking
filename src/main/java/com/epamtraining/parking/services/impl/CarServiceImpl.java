@@ -8,6 +8,8 @@ import com.epamtraining.parking.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.RolesAllowed;
+
 @Service
 public class CarServiceImpl implements CarService {
     @Autowired
@@ -16,6 +18,7 @@ public class CarServiceImpl implements CarService {
     private UserRepository userRepository;
 
     @Override
+    @RolesAllowed("ROLE_role_user")
     public CarEntity createCar(CarEntity car, Long userId) {
 
         UserEntity user = userRepository.findById(userId).get();

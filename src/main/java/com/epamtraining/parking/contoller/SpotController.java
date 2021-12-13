@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -16,16 +17,19 @@ public class SpotController {
     private final SpotService spotService;
 
     @GetMapping
+    @RolesAllowed("{role_user,role_admin}")
     public List<SpotEntity> getAllSpots() {
         return spotService.getAll();
     }
 
     @GetMapping("/allFree")
+    @RolesAllowed("{role_user,role_admin}")
     public List<SpotEntity> getAllFreeSpots() {
         return spotService.getFreeSpots();
     }
 
     @GetMapping("/allBooked")
+    @RolesAllowed("{role_user,role_admin}")
     public List<SpotEntity> getAllBookedSpots() {
         return spotService.getAllBookedSpots();
     }

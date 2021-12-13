@@ -3,10 +3,10 @@ package com.epamtraining.parking.contoller;
 import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -19,7 +19,14 @@ public class UserController {
 
         return userService.createUser(user);
 
-
     }
+
+    @GetMapping
+    @RolesAllowed("role_admin")
+    public List<UserEntity> getALlUsers() {
+
+        return userService.getAllUsers();
+    }
+
 }
 

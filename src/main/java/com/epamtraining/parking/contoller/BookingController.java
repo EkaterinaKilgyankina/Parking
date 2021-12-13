@@ -43,9 +43,9 @@ public class BookingController {
         return bookingService.prolongBooking(request, bookingId);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/cancel/{id}")
     public @ResponseBody
-    ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+    ResponseEntity<String> cancelBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
     }

@@ -1,6 +1,4 @@
-package com.epamtraining.parking.domain;
-
-import lombok.Data;
+package com.epamtraining.parking.model;
 
 import java.time.LocalDateTime;
 

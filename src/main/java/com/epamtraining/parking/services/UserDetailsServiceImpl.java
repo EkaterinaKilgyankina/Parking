@@ -1,14 +1,12 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -18,10 +16,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.getUserEntityByEmail(username);
+        UserEntity user = userRepository.findByEmail(username).get();
 
         if (user == null) {
-            throw new UsernameNotFoundException("Could not find user");
+            throw new UsernameNotFoundException("Could not find user by email" + user.getEmail());
         }
 
         return new MyUserDetails(user);

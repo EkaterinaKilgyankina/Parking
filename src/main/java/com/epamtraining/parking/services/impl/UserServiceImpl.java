@@ -1,15 +1,15 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service("userService")
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(UserEntity user) {
-        user.setRoles(Collections.singleton(roleRepository.findByName("role_user").get()));
+        user.setRoles(Collections.singleton(roleRepository.findByName("role_user")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUser(String email) {
-        return userRepository.getUserEntityByEmail(email);
+        return userRepository.findByEmail(email).get();
     }
 
     @Override
@@ -47,12 +47,12 @@ public class UserServiceImpl implements UserService {
         if (userEmail == null || userEmail.length() == 0) {
             throw new RuntimeException("Field cannot be empty.");
         }
-        if(!isEmail(userEmail)) {
+        if (!isEmail(userEmail)) {
             throw new RuntimeException("It is not an email.");
         }
-        if (emailExists(user.getEmail())) {
-            throw new RuntimeException("There is an account with that email address: " + user.getEmail());
-        }
+//        if (emailExists(user.getEmail())) {
+//            throw new RuntimeException("There is an account with that email address: " + user.getEmail());
+//        }
         UserEntity userNew = new UserEntity();
         userNew.setPassword(passwordEncoder.encode(user.getPassword()));
         userNew.setEmail(user.getEmail());
@@ -65,6 +65,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailExists(final String email) {
-        return userRepository.getUserEntityByEmail(email) != null;
+        return userRepository.findByEmail(email) != null;
     }
 }

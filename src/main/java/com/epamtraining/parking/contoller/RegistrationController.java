@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,8 @@ public class RegistrationController {
         model.addAttribute("user", user);
         return "registration";
     }
-
     @PostMapping
     public UserEntity registerUserAccount(@RequestBody UserEntity user) {
-        UserEntity registered = userService.registerNewUserAccount(user);
-        return registered;
+        return userService.registerNewUserAccount(user);
     }
 }

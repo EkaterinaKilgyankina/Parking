@@ -1,7 +1,7 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.RestError;
 import com.epamtraining.parking.domain.exception.ApplicationException;
+import com.epamtraining.parking.domain.exception.RestError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

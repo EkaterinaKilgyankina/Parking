@@ -1,5 +1,6 @@
 package com.epamtraining.parking.services.impl;
 
+import com.epamtraining.parking.domain.RoleEntity;
 import com.epamtraining.parking.domain.UserEntity;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.repository.UserRepository;
@@ -59,6 +60,13 @@ public class UserServiceImpl implements UserService {
         userNew.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return userRepository.save(userNew);
     }
+
+    @Override
+    public UserEntity changeUserRole(RoleEntity role, Long userId) {
+        userRepository.findById(userId);
+        return null;
+    }
+
 
     private boolean isEmail(final String email) {
         return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");

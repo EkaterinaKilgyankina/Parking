@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping
+    @RolesAllowed("{ROLE_USER}")
     public List<BookingEntity> getAll() {
         return bookingService.getAll();
     }
@@ -39,9 +41,9 @@ public class BookingController {
         return bookingService.prolongBooking(request, bookingId);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/cancel/{id}")
     public @ResponseBody
-    ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+    ResponseEntity<String> cancelBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
     }

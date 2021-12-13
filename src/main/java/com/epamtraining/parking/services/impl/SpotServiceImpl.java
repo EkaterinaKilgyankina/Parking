@@ -1,7 +1,7 @@
 package com.epamtraining.parking.services.impl;
 
 import com.epamtraining.parking.domain.SpotEntity;
-import com.epamtraining.parking.repository.SpotRepositoty;
+import com.epamtraining.parking.repository.SpotRepository;
 import com.epamtraining.parking.services.SpotService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +13,21 @@ import java.util.List;
 @AllArgsConstructor
 public class SpotServiceImpl implements SpotService {
     @Autowired
-    private SpotRepositoty spotRepositoty;
+    private SpotRepository spotRepository;
 
     @Override
     public List<SpotEntity> getAll() {
-        return spotRepositoty.findAll();
+        return spotRepository.findAll();
     }
 
     @Override
     public List<SpotEntity> getFreeSpots() {
-        return spotRepositoty.findAllByBookingEntityIsNull();
+        return spotRepository.findAllByBookingEntityIsNull();
     }
 
     @Override
     public List<SpotEntity> getAllBookedSpots() {
-        return spotRepositoty.findAllByBookingEntityIsNotNull();
+        return spotRepository.findAllByBookingEntityIsNotNull();
     }
 
 //    @Override

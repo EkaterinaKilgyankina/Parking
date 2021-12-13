@@ -11,8 +11,8 @@ spring:
       minimum-idle: 1
       maximum-pool-size: 10
       pool-name: ${spring.application.name}-pool
-    username: test
-    password: 111
+    username: postgres
+    password: 1111
     url: jdbc:postgresql://localhost:5432/test
   application:
     name: parking

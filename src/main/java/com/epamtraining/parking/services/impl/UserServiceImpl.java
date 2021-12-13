@@ -1,16 +1,15 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.RoleEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service("userService")
 @AllArgsConstructor
@@ -19,8 +18,7 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
-
-    // to do createAdmin
+    // TODO createAdmin
 
     @Override
     public UserEntity createUser(UserEntity user) {

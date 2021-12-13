@@ -1,6 +1,6 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.BookingEntity;
+import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.services.BookingService;
@@ -20,17 +20,19 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping
-    @RolesAllowed("{ROLE_USER}")
+    @RolesAllowed("{role_user,role_admin}")
     public List<BookingEntity> getAll() {
         return bookingService.getAll();
     }
 
     @GetMapping("/{carNumber}")
+    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity getBookingByCarNumber(@PathVariable String carNumber) {
         return bookingService.getByCarNumber(carNumber);
     }
 
     @PostMapping
+    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
         return bookingService.createBooking(bookingRequest);
     }

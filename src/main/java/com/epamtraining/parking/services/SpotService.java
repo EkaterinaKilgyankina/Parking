@@ -1,6 +1,6 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.domain.SpotEntity;
+import com.epamtraining.parking.domain.entity.SpotEntity;
 
 import java.util.List;
 

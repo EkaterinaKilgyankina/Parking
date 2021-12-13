@@ -1,12 +1,14 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.CarEntity;
-import com.epamtraining.parking.domain.UserEntity;
+import com.epamtraining.parking.domain.entity.CarEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.CarRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.security.RolesAllowed;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -16,6 +18,7 @@ public class CarServiceImpl implements CarService {
     private UserRepository userRepository;
 
     @Override
+    @RolesAllowed("ROLE_role_user")
     public CarEntity createCar(CarEntity car, Long userId) {
 
         UserEntity user = userRepository.findById(userId).get();

@@ -1,6 +1,5 @@
 package com.epamtraining.parking.services.impl;
 
-import com.epamtraining.parking.domain.RoleEntity;
 import com.epamtraining.parking.domain.UserEntity;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.repository.UserRepository;
@@ -16,17 +15,17 @@ import java.util.List;
 @Service("userService")
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
+
+
+    // to do createAdmin
 
     @Override
     public UserEntity createUser(UserEntity user) {
+        user.setRoles(Collections.singleton(roleRepository.findByName("role_user")));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -37,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUser(String email) {
-        return userRepository.getUserEntityByEmail(email);
+        return userRepository.findByEmail(email).get();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
         if (userEmail == null || userEmail.length() == 0) {
             throw new RuntimeException("Field cannot be empty.");
         }
-        if(!isEmail(userEmail)) {
+        if (!isEmail(userEmail)) {
             throw new RuntimeException("It is not an email.");
         }
         if (emailExists(user.getEmail())) {
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userNew = new UserEntity();
         userNew.setPassword(passwordEncoder.encode(user.getPassword()));
         userNew.setEmail(user.getEmail());
-        userNew.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        userNew.setRoles(Arrays.asList(roleRepository.findByName("role_user")));
         return userRepository.save(userNew);
     }
 
@@ -73,6 +72,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailExists(final String email) {
-        return userRepository.getUserEntityByEmail(email) != null;
+        return userRepository.findByEmail(email) != null;
     }
 }

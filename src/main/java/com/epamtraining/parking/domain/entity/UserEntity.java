@@ -1,4 +1,4 @@
-package com.epamtraining.parking.domain;
+package com.epamtraining.parking.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
 @ToString(exclude = {"cars"})
 public class UserEntity {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -37,7 +37,7 @@ public class UserEntity {
         this.roles.add(role);
     }
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     private List<CarEntity> cars;
 }

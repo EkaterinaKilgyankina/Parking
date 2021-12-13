@@ -1,38 +1,27 @@
 package com.epamtraining.parking.contoller;
 
-import com.epamtraining.parking.domain.CarEntity;
-import com.epamtraining.parking.domain.RoleEntity;
-import com.epamtraining.parking.domain.UserEntity;
-import com.epamtraining.parking.repository.UserRepository;
-import com.epamtraining.parking.services.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.epamtraining.parking.domain.entity.UserEntity;
+import com.epamtraining.parking.services.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/users")
 public class UserController {
+    private UserService userService;
 
-    @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    public UserController(UserServiceImpl userService, UserRepository userRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-    }
-
-    private final UserRepository userRepository;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @GetMapping
-    public List<UserEntity> getAllUsers() {
+    @RolesAllowed("role_admin")
+    public List<UserEntity> getAll() {
+
         return userService.getAll();
     }
 

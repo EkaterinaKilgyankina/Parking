@@ -1,15 +1,13 @@
 package com.epamtraining.parking.services;
 
-import com.epamtraining.parking.domain.SpotBooking;
-import com.epamtraining.parking.domain.BookingEntity;
+import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
+import com.epamtraining.parking.model.SpotBooking;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import java.util.*;
 
-@Service
 public interface BookingService {
 
     List<BookingEntity> getAll();
@@ -22,6 +20,6 @@ public interface BookingService {
 
     void deleteBooking (Long id);
 
-    public List<SpotBooking> getSpotBookingsForTimePeriod();
+    List<SpotBooking> getSpotBookingsForTimePeriod();
 
 }

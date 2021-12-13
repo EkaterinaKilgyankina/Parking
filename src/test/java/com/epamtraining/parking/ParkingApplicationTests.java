@@ -15,7 +15,7 @@ class ParkingApplicationTests {
     @Autowired
     CarRepository carRepository;
     @Autowired
-    SpotRepository spotRepositoty;
+    SpotRepository spotRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -28,7 +28,6 @@ class ParkingApplicationTests {
 
     @Test
     void contextLoads() {
-        
     }
 
 }

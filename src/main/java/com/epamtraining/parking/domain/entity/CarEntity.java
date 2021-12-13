@@ -1,6 +1,5 @@
-package com.epamtraining.parking.domain;
+package com.epamtraining.parking.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

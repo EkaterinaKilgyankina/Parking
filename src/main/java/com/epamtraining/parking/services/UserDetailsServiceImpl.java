@@ -27,12 +27,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new MyUserDetails(user);
     }
 
-    private static List<GrantedAuthority> getAuthorities (List<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
-    }
-
 }

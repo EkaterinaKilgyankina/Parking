@@ -13,7 +13,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
 
-    @Query("select u from UserEntity u WHERE u.email = :email")
-    public UserEntity getUserEntityByEmail(@Param("email") String email);
+    public UserEntity getUserEntityByEmail(String email);
 
 }

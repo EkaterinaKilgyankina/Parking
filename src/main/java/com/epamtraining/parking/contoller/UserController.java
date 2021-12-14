@@ -2,6 +2,7 @@ package com.epamtraining.parking.contoller;
 
 import com.epamtraining.parking.domain.entity.RoleEntity;
 import com.epamtraining.parking.domain.entity.UserEntity;
+import com.epamtraining.parking.model.ChangeRoleRequest;
 import com.epamtraining.parking.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
 
 
     @GetMapping
-    @RolesAllowed("role_admin")
+    @RolesAllowed("{role_admin}")
     public List<UserEntity> getAll() {
 
         return userService.getAll();
@@ -34,11 +35,10 @@ public class UserController {
         return user;
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("/edit/")
     @RolesAllowed("{role_admin}")
-    public ResponseEntity changeUserRole (@RequestBody RoleEntity role,
-                                          @PathVariable Long userId) {
-        return ResponseEntity.ok(userService.changeUserRole(role, userId));
+    public ResponseEntity changeUserRole (@RequestBody ChangeRoleRequest role) {
+        return ResponseEntity.ok(userService.changeUserRole(role));
     }
 
 }

@@ -38,16 +38,17 @@ public class BookingController {
     }
 
     @PutMapping("/{bookingId}")
+    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity prolongBooking(@RequestBody @Valid BookingRequestForProlonging request
             , @PathVariable Long bookingId) {
         return bookingService.prolongBooking(request, bookingId);
     }
 
-    @DeleteMapping("/cancel/{id}")
-    public @ResponseBody
-    ResponseEntity<String> cancelBooking(@PathVariable Long id) {
+    @DeleteMapping("{id}")
+    @RolesAllowed("{role_user,role_admin}")
+    public ResponseEntity cancelBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
-        return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
+        return new ResponseEntity("DELETE Response", HttpStatus.OK);
     }
 
 }

@@ -17,7 +17,7 @@ public class SpotEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bookingId", referencedColumnName = "id")
     @JsonIgnore
     private BookingEntity bookingEntity;

@@ -2,7 +2,7 @@ package com.epamtraining.parking.model;
 
 import java.time.LocalDateTime;
 
-
+// TODO to update?
 public class SpotBooking {
     private String location;
     private String number;

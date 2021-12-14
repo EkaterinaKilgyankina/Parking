@@ -1,7 +1,8 @@
-package com.epamtraining.parking.services;
+package com.epamtraining.parking.services.impl;
 
 import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.repository.UserRepository;
+import com.epamtraining.parking.services.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

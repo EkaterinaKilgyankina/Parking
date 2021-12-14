@@ -1,12 +1,11 @@
 package com.epamtraining.parking.contoller;
 
+import com.epamtraining.parking.domain.entity.RoleEntity;
 import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
@@ -20,11 +19,11 @@ public class UserController {
 
     @GetMapping
     @RolesAllowed("role_admin")
-    public List<UserEntity> getALl() {
+    public List<UserEntity> getAll() {
 
         return userService.getAll();
-
     }
+
 
     @GetMapping("/{email}")
     public UserEntity getUser(@PathVariable String email) {
@@ -33,6 +32,13 @@ public class UserController {
             throw new UsernameNotFoundException(email);
         }*/
         return user;
+    }
+
+    @PostMapping("/{userId}")
+    @RolesAllowed("{role_admin}")
+    public ResponseEntity changeUserRole (@RequestBody RoleEntity role,
+                                          @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.changeUserRole(role, userId));
     }
 
 }

@@ -22,45 +22,33 @@ import java.util.List;
 public class BookingController {
     private BookingService bookingService;
 
-    @GetMapping
-    @RolesAllowed("{role_user,role_admin}")
-    public List<BookingEntity> getAll() {
-        return bookingService.getAll();
-    }
-
-    @GetMapping("/{carNumber}")
-    @RolesAllowed("{role_user,role_admin}")
-    public BookingEntity getBookingByCarNumber(@PathVariable String carNumber) {
-        return bookingService.getByCarNumber(carNumber);
-    }
-
     @PostMapping
-    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
         return bookingService.createBooking(bookingRequest);
     }
 
+    // TODO needs review
     @PutMapping("/{bookingId}")
-    @RolesAllowed("{role_user,role_admin}")
     public BookingEntity prolongBooking(@RequestBody @Valid BookingRequestForProlonging request
             , @PathVariable Long bookingId) {
         return bookingService.prolongBooking(request, bookingId);
     }
 
+    // TODO needs review
     @DeleteMapping("{id}")
-    @RolesAllowed("{role_user,role_admin}")
     public ResponseEntity cancelBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity("DELETE Response", HttpStatus.OK);
     }
 
+    // TODO do we need these requests?
+    @GetMapping
+    public List<BookingEntity> getAll() {
+        return bookingService.getAll();
+    }
 
-    @GetMapping("/free_spots")
-    public List<SpotEntity>  getBookings(@RequestParam("from")
-                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDateTime,
-                                         @RequestParam("to")
-                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDateTime){
-        List<SpotEntity> spotBookings = bookingService.getSpotBookingsForTimePeriod(fromDateTime, toDateTime);
-        return spotBookings;
+    @GetMapping("/{carNumber}")
+    public BookingEntity getBookingByCarNumber(@PathVariable String carNumber) {
+        return bookingService.getByCarNumber(carNumber);
     }
 }

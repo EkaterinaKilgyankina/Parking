@@ -54,11 +54,11 @@ class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 
         if (spot.getBookingEntity() != null) {
-            throw new RuntimeException("");// создать ошибки
+            throw new ApplicationException("Requesting spot is already booked");
         }
 
         CarEntity car = carRepository.findByNumber(request.getCarNumber())
-                .orElseThrow(() -> new RuntimeException(""));
+                .orElseThrow(() -> new ApplicationException("Please check the number of the car"));
 
         if (car.getBookingEntity() != null) {
             throw new ApplicationException("Car has booking");
@@ -87,10 +87,13 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public void deleteBooking(Long id) {
-//        SpotEntity byBookingEntity_id = spotRepositoty.findByBookingEntity_Id(id);
-//        byBookingEntity_id.getBookingEntity().setId(0L);
-        bookingRepository.deleteById(id);
+        SpotEntity spot = spotRepository.findByBookingEntity_Id(id);
+        spot.setBookingEntity(null);
+        spotRepository.save(spot);
+        BookingEntity booking = bookingRepository.findById(id).get();
+        bookingRepository.delete(booking);
     }
+
 
     // TODO shows spot bookings based on period of time
     public List<SpotBooking> getSpotBookingsForTimePeriod() {

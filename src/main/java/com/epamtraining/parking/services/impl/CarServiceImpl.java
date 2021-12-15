@@ -2,27 +2,33 @@ package com.epamtraining.parking.services.impl;
 
 import com.epamtraining.parking.domain.entity.CarEntity;
 import com.epamtraining.parking.domain.entity.UserEntity;
+import com.epamtraining.parking.model.CarRequest;
 import com.epamtraining.parking.repository.CarRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
-
 @Service
+@AllArgsConstructor
 public class CarServiceImpl implements CarService {
-    @Autowired
     private CarRepository carRepository;
-    @Autowired
     private UserRepository userRepository;
 
     @Override
-    @RolesAllowed("ROLE_role_user")
-    public CarEntity createCar(CarEntity car, Long userId) {
+    public CarEntity createCar(CarRequest car, Long userId) {
 
         UserEntity user = userRepository.findById(userId).get();
-        car.setUser(user);
-        return carRepository.save(car);
+        CarEntity carEntity = new CarEntity();
+        carEntity.setUser(user)
+                .setNumber(car.getNumber());
+        return carRepository.save(carEntity);
+    }
+
+    @Override
+    // TODO to agree on param for delete operation
+    public void deleteCar(Long id) {
+        CarEntity car = carRepository.getById(id);
+        carRepository.delete(car);
     }
 }

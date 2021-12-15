@@ -13,5 +13,6 @@ public interface SpotRepository extends JpaRepository<SpotEntity, Long> {
 
     List<SpotEntity> findAllByBookingEntityIsNotNull();
 
-//    SpotEntity findByBookingEntity_Id(long id);
+    SpotEntity findByBookingEntity_Id(long id);
+
 }

@@ -22,4 +22,5 @@ public interface BookingService {
 
     List<SpotBooking> getSpotBookingsForTimePeriod();
 
+
 }

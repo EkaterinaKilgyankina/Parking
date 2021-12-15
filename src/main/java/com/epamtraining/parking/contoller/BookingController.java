@@ -1,16 +1,19 @@
 package com.epamtraining.parking.contoller;
 
 import com.epamtraining.parking.domain.entity.BookingEntity;
+import com.epamtraining.parking.domain.entity.SpotEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.services.BookingService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -51,4 +54,13 @@ public class BookingController {
         return new ResponseEntity("DELETE Response", HttpStatus.OK);
     }
 
+
+    @GetMapping("/free_spots")
+    public List<SpotEntity>  getBookings(@RequestParam("from")
+                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDateTime,
+                                         @RequestParam("to")
+                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDateTime){
+        List<SpotEntity> spotBookings = bookingService.getSpotBookingsForTimePeriod(fromDateTime, toDateTime);
+        return spotBookings;
+    }
 }

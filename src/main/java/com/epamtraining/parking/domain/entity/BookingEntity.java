@@ -1,7 +1,7 @@
 package com.epamtraining.parking.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "booking", schema = "public")
+@EqualsAndHashCode(exclude = {"spotEntity"})
+@ToString(exclude = {"spotEntity"})
 @Accessors(chain = true)
 public class BookingEntity {
 
@@ -25,7 +27,12 @@ public class BookingEntity {
     @JoinColumn(name = "carId", referencedColumnName = "id")
     private CarEntity carEntity;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "spotId", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "spot_id")
     private SpotEntity spotEntity;
+
+  /*  @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "spot_id")
+    private SpotEntity spot;*/
+
 }

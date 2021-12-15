@@ -9,11 +9,11 @@ public interface SpotService {
 
     List<SpotEntity> getAll();
 
-    List<SpotEntity> getFreeSpots();
+    //List<SpotEntity> getFreeSpots();
 
-    List<SpotEntity> getAllBookedSpots();
+    //List<SpotEntity> getAllBookedSpots();
 
-    SpotEntity getSpotByBookingId(long id);
+    //SpotEntity getSpotByBookingId(long id);
 
     SpotEntity createSpot(SpotRequest spotRequest);
 

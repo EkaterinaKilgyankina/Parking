@@ -24,7 +24,7 @@ public class SpotController {
         return spotService.getAll();
     }
 
-    @GetMapping("/free")
+  /*  @GetMapping("/free")
     @RolesAllowed("{role_user,role_admin}")
     public List<SpotEntity> getAllFreeSpots() {
         return spotService.getFreeSpots();
@@ -34,7 +34,7 @@ public class SpotController {
     @RolesAllowed("{role_user,role_admin}")
     public List<SpotEntity> getAllBookedSpots() {
         return spotService.getAllBookedSpots();
-    }
+    }*/
 
     @PostMapping
     @RolesAllowed("role_admin")

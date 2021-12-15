@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/registration")
+@RequestMapping("/registration/")
 public class RegistrationController {
     private UserServiceImpl userService;
 
@@ -22,5 +22,10 @@ public class RegistrationController {
     @PostMapping
     public UserEntity registerUserAccount(@RequestBody UserEntity user) {
         return userService.registerNewUserAccount(user);
+    }
+
+    @PostMapping("/admin")
+    public UserEntity registerAdminAccount(@RequestBody UserEntity user) {
+        return userService.registerAdminAccount(user);
     }
 }

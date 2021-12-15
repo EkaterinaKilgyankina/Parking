@@ -54,9 +54,9 @@ class BookingServiceImpl implements BookingService {
         SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 
-        Duration parkingTime = Duration.between(request.getTo(), request.getFrom());
-        Duration allowedParking = Duration.ofHours(24);
-        if(parkingTime.compareTo(allowedParking) > 0) throw new RuntimeException("Cannot make a booking more than for 24 hours.");
+        long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
+        long allowedParking = 1440L;
+        if(parkingTime - allowedParking > 0) throw new RuntimeException("Cannot make a booking more than for 24 hours.");
 
         List<BookingEntity> bookings = spot.getBookings();
 
@@ -99,29 +99,4 @@ class BookingServiceImpl implements BookingService {
         BookingEntity booking = bookingRepository.findById(id).get();
         bookingRepository.delete(booking);
     }
-
-
-    // TODO shows spot bookings based on period of time
-    public List<SpotEntity> getSpotBookingsForTimePeriod(LocalDateTime from, LocalDateTime to) {
-        List<BookingEntity> bookings = bookingRepository.findAll();
-        List<Long> anyBookedSpotId = new ArrayList<>();
-        for (BookingEntity booking: bookings) {
-            anyBookedSpotId.add(booking.getSpotEntity().getId());
-        }
-        List<SpotEntity> freeSpots = new ArrayList<>();
-        List<SpotEntity> spots = spotRepository.findAll();
-        for (SpotEntity spot: spots) {
-            if(!anyBookedSpotId.contains(spot.getId())) freeSpots.add(spot);
-        }
-        for (BookingEntity booking: bookings) {
-            if(booking.getBookingTo().isBefore(from) || booking.getBookingFrom().isAfter(to)) {
-                freeSpots.add(spotRepository.findByLocation(booking.getSpotEntity().getLocation()).get());
-            }
-        }
-        Collections.sort(freeSpots, (o1, o2) -> o1.getId().intValue() - o2.getId().intValue());
-
-        return freeSpots;
-    }
-
-
 }

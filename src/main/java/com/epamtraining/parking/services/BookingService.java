@@ -21,7 +21,6 @@ public interface BookingService {
 
     void deleteBooking (Long id);
 
-    List<SpotEntity> getSpotBookingsForTimePeriod(LocalDateTime from, LocalDateTime to);
 
 
 }

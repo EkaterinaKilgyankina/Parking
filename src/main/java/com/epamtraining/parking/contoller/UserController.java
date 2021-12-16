@@ -15,16 +15,15 @@ import java.util.List;
 public class UserController {
     private UserService userService;
 
-
-    @GetMapping
-    public List<UserEntity> getAll() {
-
-        return userService.getAll();
-    }
-
     @PostMapping("/edit/")
     public ResponseEntity changeUserRole (@RequestBody ChangeRoleRequest role) {
         return ResponseEntity.ok(userService.changeUserRole(role));
     }
 
+    // TODO probably we don't need this
+    @GetMapping
+    public List<UserEntity> getAll() {
+
+        return userService.getAll();
+    }
 }

@@ -12,20 +12,22 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
     private UserServiceImpl userService;
 
-    @GetMapping
-    public String showRegistrationForm(Model model) {
-        UserEntity user = new UserEntity();
-        model.addAttribute("user", user);
-        return "registration";
-    }
-
     @PostMapping
     public UserEntity registerUserAccount(@RequestBody UserEntity user) {
         return userService.registerNewUserAccount(user);
     }
 
+    // TODO probably should be hidden somehow in real world
     @PostMapping("/admin")
     public UserEntity registerAdminAccount(@RequestBody UserEntity user) {
         return userService.registerAdminAccount(user);
+    }
+
+    // TODO probably will be useful when start work on UI
+    @GetMapping
+    public String showRegistrationForm(Model model) {
+        UserEntity user = new UserEntity();
+        model.addAttribute("user", user);
+        return "registration";
     }
 }

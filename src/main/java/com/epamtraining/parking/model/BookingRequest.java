@@ -11,12 +11,12 @@ public class BookingRequest {
     @Pattern(regexp = "[0-9]{3}", message = "invalid car number")
     private String carNumber;
     @Min(value = 1, message = "invalid spot number")
-    private long spotNumber;
+    private String spotLocation;
     @NotNull(message = "please, enter the time for start")
     @Future(message = "please, enter the actual time in the future")
     private LocalDateTime from;
     // TODO TO CHANGE BACK TO 30 MIN
-    @Min(value = 5, message = "min time for booking = 30 minutes")
-    @Max(value = 1440, message = " time for booking = 24 hours")
-    private int duration; //минуты
+    @NotNull(message = "please, enter the time for start")
+    @Future(message = "please, enter the actual time in the future")
+    private LocalDateTime to;
 }

@@ -29,7 +29,6 @@ CREATE TABLE "car"
 CREATE TABLE "spot"
 (
     "id"      bigserial PRIMARY KEY,
-    "booking_id" bigint,
     "location"  text NOT NULL
 );
 
@@ -48,8 +47,6 @@ alter TABLE "user_roles" add constraint USER_ROLES_ROLE_ID_FKEY foreign key (rol
 
 alter TABLE "car"
     add constraint car_user_id_fkey foreign key (user_id) references "user" (id);
-alter TABLE "spot"
-    add constraint spot_booking_id_fkey foreign key (booking_id) references "booking" (id);
 alter TABLE "booking"
     add constraint booking_car_id_fkey foreign key (car_id) references "car" (id);
 alter TABLE "booking"

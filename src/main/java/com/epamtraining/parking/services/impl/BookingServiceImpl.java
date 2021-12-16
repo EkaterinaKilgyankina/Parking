@@ -6,7 +6,6 @@ import com.epamtraining.parking.domain.entity.SpotEntity;
 import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
-import com.epamtraining.parking.model.SpotBooking;
 import com.epamtraining.parking.repository.BookingRepository;
 import com.epamtraining.parking.repository.CarRepository;
 import com.epamtraining.parking.repository.SpotRepository;
@@ -15,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 class BookingServiceImpl implements BookingService {
@@ -50,27 +47,36 @@ class BookingServiceImpl implements BookingService {
     @Override
     @Transactional // если больше 1 запросов на запись в базу
     public BookingEntity createBooking(BookingRequest request) {
-        SpotEntity spot = spotRepository.findById(request.getSpotNumber())
+        CarEntity car = carRepository.findByNumber(request.getCarNumber())
+                .orElseThrow(() -> new ApplicationException("Car not found"));
+
+        String spotLocation = request.getSpotLocation();
+        SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 
-        if (spot.getBookingEntity() != null) {
-            throw new ApplicationException("Requesting spot is already booked");
-        }
+        long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
+        long allowedParking = 1440L;
+        if(parkingTime - allowedParking > 0) throw new RuntimeException("Cannot make a booking more than for 24 hours.");
 
-        CarEntity car = carRepository.findByNumber(request.getCarNumber())
-                .orElseThrow(() -> new ApplicationException("Please check the number of the car"));
+        List<BookingEntity> bookings = spot.getBookings();
 
-        if (car.getBookingEntity() != null) {
-            throw new ApplicationException("Car has booking");
+        int count = 0;
+        for (BookingEntity booking: bookings) {
+            if(!booking.getBookingFrom().isAfter(request.getTo()) || !booking.getBookingTo().isBefore(request.getFrom())) {
+                count++;
+            }
         }
+        if(count > 0) throw new RuntimeException("Spot is busy");
+
+        BookingEntity carBookings = car.getBookingEntity();
+
+        if(carBookings != null) throw new RuntimeException("Spot for this car is already booked.");
 
         BookingEntity booking = new BookingEntity()
                 .setCarEntity(car)
                 .setSpotEntity(spot)
                 .setBookingFrom(request.getFrom())
-                .setBookingTo(request.getFrom().plusMinutes(request.getDuration()));
-
-        spotRepository.save(spot.setBookingEntity(booking));
+                .setBookingTo(request.getTo());
 
         return bookingRepository.save(booking);
     }
@@ -87,39 +93,10 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public void deleteBooking(Long id) {
-        SpotEntity spot = spotRepository.findByBookingEntity_Id(id);
-        spot.setBookingEntity(null);
-        spotRepository.save(spot);
+        //SpotEntity spot = spotRepository.findByBookingEntity_Id(id);
+        //spot.setBookingEntity(null);
+        //spotRepository.save(spot);
         BookingEntity booking = bookingRepository.findById(id).get();
         bookingRepository.delete(booking);
     }
-
-
-    // TODO shows spot bookings based on period of time
-    public List<SpotBooking> getSpotBookingsForTimePeriod() {
-        Iterable<SpotEntity> spots = this.spotRepository.findAll();
-        Map<Long, SpotBooking> spotBookingMap = new HashMap<>();
-        spots.forEach(spot -> {
-            SpotBooking spotBooking = new SpotBooking();
-            spotBooking.setLocation(spot.getLocation());
-            spotBookingMap.put(spot.getId(), spotBooking);
-        });
-        Iterable<BookingEntity> bookings = this.bookingRepository.findAll();
-        bookings.forEach(booking -> {
-            //SpotBooking spotBooking = spotBookingMap.get(booking.getSpotId());
-            //spotBooking.setFrom(from);
-            //spotBooking.setTo(to);
-            //CarEntity car = this.carRepository.findById(booking.getCarId()).get();
-            //spotBooking.setNumber(car.getNumber());
-        });
-
-        List<SpotBooking> spotBookings = new ArrayList<>();
-        for(Long id: spotBookingMap.keySet()) {
-            spotBookings.add(spotBookingMap.get(id));
-        }
-
-        return spotBookings;
-    }
-
-
 }

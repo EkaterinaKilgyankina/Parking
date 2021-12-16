@@ -56,21 +56,19 @@ class BookingServiceImpl implements BookingService {
 
         long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
         long allowedParking = 1440L;
-        if(parkingTime - allowedParking > 0) throw new RuntimeException("Cannot make a booking more than for 24 hours.");
+        if(parkingTime - allowedParking > 0) throw new ApplicationException("Cannot make a booking more than for 24 hours.");
 
         List<BookingEntity> bookings = spot.getBookings();
 
-        int count = 0;
         for (BookingEntity booking: bookings) {
             if(!booking.getBookingFrom().isAfter(request.getTo()) || !booking.getBookingTo().isBefore(request.getFrom())) {
-                count++;
+                throw new ApplicationException("Spot is busy");
             }
         }
-        if(count > 0) throw new RuntimeException("Spot is busy");
 
         BookingEntity carBookings = car.getBookingEntity();
 
-        if(carBookings != null) throw new RuntimeException("Spot for this car is already booked.");
+        if(carBookings != null) throw new ApplicationException("Spot for this car is already booked.");
 
         BookingEntity booking = new BookingEntity()
                 .setCarEntity(car)

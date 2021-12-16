@@ -27,7 +27,7 @@ public class BookingEntity {
     @JoinColumn(name = "carId", referencedColumnName = "id")
     private CarEntity carEntity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "spot_id")
     private SpotEntity spotEntity;
 

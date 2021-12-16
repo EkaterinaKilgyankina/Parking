@@ -1,6 +1,7 @@
 package com.epamtraining.parking.services;
 
 import com.epamtraining.parking.domain.entity.SpotEntity;
+import com.epamtraining.parking.model.BookedSpot;
 import com.epamtraining.parking.model.SpotRequest;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ public interface SpotService {
 
     List<SpotEntity> getAll();
 
-    List<SpotEntity> getAllBookedSpots(LocalDateTime from, LocalDateTime to);
+    List<BookedSpot> getAllBookedSpots(LocalDateTime from, LocalDateTime to);
 
     //SpotEntity getSpotByBookingId(long id);
 

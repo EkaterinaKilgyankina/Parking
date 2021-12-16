@@ -2,10 +2,13 @@ package com.epamtraining.parking.services.impl;
 
 import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.domain.entity.SpotEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.domain.exception.ApplicationException;
+import com.epamtraining.parking.model.BookedSpot;
 import com.epamtraining.parking.model.SpotRequest;
 import com.epamtraining.parking.repository.BookingRepository;
 import com.epamtraining.parking.repository.SpotRepository;
+import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.SpotService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class SpotServiceImpl implements SpotService {
     private BookingRepository bookingRepository;
     @Autowired
     private SpotRepository spotRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<SpotEntity> getAll() {
@@ -66,8 +72,22 @@ public class SpotServiceImpl implements SpotService {
 
     // TODO implement
     @Override
-    public List<SpotEntity> getAllBookedSpots(LocalDateTime from, LocalDateTime to) {
-        List<SpotEntity> bookedSpots = new ArrayList<>();
+    public List<BookedSpot> getAllBookedSpots(LocalDateTime from, LocalDateTime to) {
+        List<BookedSpot> bookedSpots = new ArrayList<>();
+
+        List<BookingEntity> bookings = bookingRepository.findAll();
+        for (BookingEntity booking: bookings) {
+            BookedSpot spot = new BookedSpot();
+            UserEntity user = userRepository.findById(booking.getCarEntity().getUser().getId()).get();
+            spot.setEmail(user.getEmail());
+            spot.setSpotLocation(booking.getSpotEntity().getLocation());
+            spot.setFrom(booking.getBookingFrom());
+            spot.setTo(booking.getBookingTo());
+            if(!booking.getBookingFrom().isAfter(to) && !booking.getBookingTo().isBefore(from)) {
+                bookedSpots.add(spot);
+            }
+        }
+
         return bookedSpots;
     }
 

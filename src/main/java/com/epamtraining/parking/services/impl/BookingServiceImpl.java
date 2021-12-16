@@ -3,7 +3,7 @@ package com.epamtraining.parking.services.impl;
 import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.domain.entity.CarEntity;
 import com.epamtraining.parking.domain.entity.SpotEntity;
-import com.epamtraining.parking.domain.exception.RuntimeException;
+import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
 import com.epamtraining.parking.repository.BookingRepository;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,28 +47,28 @@ class BookingServiceImpl implements BookingService {
     @Transactional // если больше 1 запросов на запись в базу
     public BookingEntity createBooking(BookingRequest request) {
         CarEntity car = carRepository.findByNumber(request.getCarNumber())
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new ApplicationException("Car not found"));
 
         String spotLocation = request.getSpotLocation();
         SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
-                .orElseThrow(() -> new RuntimeException("Spot not found"));
+                .orElseThrow(() -> new ApplicationException("Spot not found"));
 
-        long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
-        long allowedParking = 1440L;
-        if (parkingTime - allowedParking > 0)
-            throw new RuntimeException("Cannot make a booking more than for 24 hours.");
+//        long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
+//        long allowedParking = 1440L;
+//        if (parkingTime - allowedParking > 0)
+//            throw new ApplicationException("Cannot make a booking more than for 24 hours.");
 
         List<BookingEntity> bookings = spot.getBookings();
 
-        for (BookingEntity booking: bookings) {
-            if(!booking.getBookingFrom().isAfter(request.getTo()) || !booking.getBookingTo().isBefore(request.getFrom())) {
-                throw new RuntimeException("Spot is busy");
+        for (BookingEntity booking : bookings) {
+            if (!booking.getBookingFrom().isAfter(request.getTo()) || !booking.getBookingTo().isBefore(request.getFrom())) {
+                throw new ApplicationException("Spot is busy");
             }
         }
 
         BookingEntity carBookings = car.getBookingEntity();
 
-        if (carBookings != null) throw new RuntimeException("Spot for this car is already booked.");
+        if (carBookings != null) throw new ApplicationException("Spot for this car is already booked.");
 
         BookingEntity booking = new BookingEntity()
                 .setCarEntity(car)
@@ -83,7 +82,7 @@ class BookingServiceImpl implements BookingService {
     @Override
     public BookingEntity prolongBooking(BookingRequestForProlonging request, Long bookingId) {
         BookingEntity bookingEntity = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking with requested Id does not exist"));
+                .orElseThrow(() -> new ApplicationException("Booking with requested Id does not exist"));
         LocalDateTime localDateTime = bookingEntity.getBookingTo().plusMinutes(request.getDuration());
         BookingEntity bookingEntity1 = bookingEntity.setBookingTo(localDateTime);
 

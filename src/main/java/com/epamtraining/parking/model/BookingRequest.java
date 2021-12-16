@@ -11,6 +11,7 @@ public class BookingRequest {
     @Pattern(regexp = "^[АВЕКМНОРСТУХ]\\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$", message = "invalid car number")
     private String carNumber;
     @Min(value = 1, message = "invalid spot number")
+    @Pattern(regexp = "[0-9]{3}", message = "invalid spot number")
     private String spotLocation;
     @NotNull(message = "please, enter the time for start")
     @Future(message = "please, enter the actual time in the future")

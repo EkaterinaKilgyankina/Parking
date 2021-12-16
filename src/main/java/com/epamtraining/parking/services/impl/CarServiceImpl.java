@@ -26,7 +26,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    // TODO to agree on param for delete operation
+    // TODO to agree on param for delete operation - id to change to number
     public void deleteCar(Long id) {
         CarEntity car = carRepository.getById(id);
         carRepository.delete(car);

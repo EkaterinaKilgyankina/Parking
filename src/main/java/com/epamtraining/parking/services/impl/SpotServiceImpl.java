@@ -3,7 +3,6 @@ package com.epamtraining.parking.services.impl;
 import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.domain.entity.SpotEntity;
 import com.epamtraining.parking.domain.entity.UserEntity;
-import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.BookedSpot;
 import com.epamtraining.parking.model.SpotRequest;
 import com.epamtraining.parking.repository.BookingRepository;

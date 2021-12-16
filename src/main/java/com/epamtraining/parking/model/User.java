@@ -2,7 +2,7 @@ package com.epamtraining.parking.model;
 
 import com.epamtraining.parking.domain.entity.UserEntity;
 import lombok.Data;
-// TODO to update??
+// TODO - create models for all entities to show to client?
 @Data
 public class User {
     private Long id;

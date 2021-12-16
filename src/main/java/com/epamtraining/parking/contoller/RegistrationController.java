@@ -13,6 +13,7 @@ public class RegistrationController {
     private UserServiceImpl userService;
 
     @PostMapping
+    //TODO разделение domain  и controller ? userEntity  vs userRequest
     public UserEntity registerUserAccount(@RequestBody UserEntity user) {
         return userService.registerNewUserAccount(user);
     }

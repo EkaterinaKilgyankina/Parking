@@ -8,7 +8,8 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "car", schema = "public")
+@Table(name = "car", schema = "public"
+        , uniqueConstraints = {@UniqueConstraint(columnNames = {"number"})})
 @Data
 @EqualsAndHashCode(exclude = {"user", "bookingEntity"})
 @ToString(exclude = {"user", "bookingEntity"})

@@ -21,7 +21,7 @@ public class SpotEntity {
     @JsonIgnore
     private BookingEntity bookingEntity;*/
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spotEntity")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "spotEntity")
     @JsonIgnore
     private List<BookingEntity> bookings;
 

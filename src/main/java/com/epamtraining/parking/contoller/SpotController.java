@@ -37,8 +37,6 @@ public class SpotController {
         return spotBookings;
     }
 
-    // TODO all following should be reviewed
-
     @GetMapping("/booked-spots")
     public List<BookedSpot> getAllBookedSpots(@RequestParam("from")
                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDateTime,

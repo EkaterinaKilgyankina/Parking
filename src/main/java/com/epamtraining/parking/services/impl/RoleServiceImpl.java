@@ -1,6 +1,7 @@
 package com.epamtraining.parking.services.impl;
 
 import com.epamtraining.parking.domain.entity.RoleEntity;
+import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleEntity> getAll() {
         List<RoleEntity> roles = roleRepository.findAll();
         if(roles == null) {
-            throw new RuntimeException("Nothing to show");
+            throw new ApplicationException("Nothing to show");
         }
 
         return roleRepository.findAll();

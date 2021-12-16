@@ -14,7 +14,7 @@ public class CarController {
     private final CarService carService;
 
     @PostMapping("/{userId}")
-    public ResponseEntity addCar(@RequestBody CarRequest car,
+    public ResponseEntity addCar(@RequestBody @Valid CarRequest car,
                                  @PathVariable Long userId) {
         return ResponseEntity.ok(carService.createCar(car, userId));
     }

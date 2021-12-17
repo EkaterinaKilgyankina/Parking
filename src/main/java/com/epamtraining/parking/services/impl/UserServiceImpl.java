@@ -26,7 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity registerAdminAccount(UserRequest user) {
-        emailValidation(user.getEmail());
+        if (emailExists(user.getEmail())) {
+            throw new ApplicationException("There is an account with that email address: " + user.getEmail());
+        }
         UserEntity userAdmin = new UserEntity();
         userAdmin.setPassword(passwordEncoder.encode(user.getPassword()));
         userAdmin.setEmail(user.getEmail());
@@ -54,7 +56,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity registerNewUserAccount(UserRequest user) {
-        emailValidation(user.getEmail());
+        if (emailExists(user.getEmail())) {
+            throw new ApplicationException("There is an account with that email address: " + user.getEmail());
+        }
         UserEntity userNew = new UserEntity();
         userNew.setPassword(passwordEncoder.encode(user.getPassword()));
         userNew.setEmail(user.getEmail());
@@ -76,13 +80,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(correctedUser);
 
         return "success";
-    }
-
-    private boolean emailValidation(final String email) {
-        if (emailExists(email)) {
-            throw new ApplicationException("There is an account with that email address: " + email);
-        }
-        return true;
     }
 
     private boolean emailExists(final String email) {

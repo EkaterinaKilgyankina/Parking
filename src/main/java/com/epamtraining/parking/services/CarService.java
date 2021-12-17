@@ -8,4 +8,6 @@ public interface CarService {
     CarEntity createCar(CarRequest car, Long userId);
 
     void deleteCar(Long id);
+
+    void approveStatus (Long id);
 }

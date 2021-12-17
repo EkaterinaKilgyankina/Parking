@@ -4,6 +4,7 @@ import com.epamtraining.parking.domain.entity.RoleEntity;
 import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.ChangeRoleRequest;
+import com.epamtraining.parking.model.UserRequest;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.UserService;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserEntity registerAdminAccount(UserEntity user) {
+    public UserEntity registerAdminAccount(UserRequest user) {
         emailValidation(user.getEmail());
         UserEntity userAdmin = new UserEntity();
         userAdmin.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -52,18 +53,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity registerNewUserAccount(UserEntity user) {
-
-        String userEmail = user.getEmail();
-        String password = user.getPassword();
-
-        if (!password.equals(user.getMatchingPassword())){
-            throw new ApplicationException("Passwords do not match.");
-        }
-        emailValidation(userEmail);
-        if(password.length() < 5) {
-            throw new ApplicationException("Password length must be more than five.");
-        }
+    public UserEntity registerNewUserAccount(UserRequest user) {
+        emailValidation(user.getEmail());
         UserEntity userNew = new UserEntity();
         userNew.setPassword(passwordEncoder.encode(user.getPassword()));
         userNew.setEmail(user.getEmail());
@@ -88,21 +79,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailValidation(final String email) {
-        if (email == null || email.length() == 0) {
-            throw new ApplicationException("Field cannot be empty.");
-        }
-        if (!isEmail(email)) {
-            throw new ApplicationException("It is not an email.");
-        }
         if (emailExists(email)) {
             throw new ApplicationException("There is an account with that email address: " + email);
         }
-
         return true;
-    }
-
-    private boolean isEmail(final String email) {
-        return email.matches("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
     }
 
     private boolean emailExists(final String email) {

@@ -45,13 +45,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   final HttpHeaders headers, final HttpStatus status,
                                                                   final WebRequest request) {
         log.error(ex.getMessage(), ex);
-        final List<String> errors = Stream.of(ex.getFieldError())
-                .filter(Objects::nonNull)
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+        //        final List<String> errors = Stream.of(ex.getFieldError())
+//                .filter(Objects::nonNull)
+//                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                .collect(Collectors.toList());
+        final List<String> errors =ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(e->e.getDefaultMessage())
                 .collect(Collectors.toList());
-
         return ResponseEntity.badRequest()
                 .body(errors);
     }
-
 }

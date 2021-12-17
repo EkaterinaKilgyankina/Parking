@@ -26,7 +26,7 @@ public class BookingController {
     // TODO как будет отображаться для фронта
     // в качестве параметра обновленную сущность с измененным временем (booking to)
     // TODO needs review
-    @PutMapping("/{bookingId}")
+    @PostMapping("/{bookingId}")
     public BookingEntity prolongBooking(@RequestBody @Valid BookingRequestForProlonging request
             , @PathVariable Long bookingId) {
         return bookingService.prolongBooking(request, bookingId);

@@ -53,11 +53,6 @@ class BookingServiceImpl implements BookingService {
         SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 
-//        long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
-//        long allowedParking = 1440L;
-//        if (parkingTime - allowedParking > 0)
-//            throw new ApplicationException("Cannot make a booking more than for 24 hours.");
-
         List<BookingEntity> bookings = spot.getBookings();
 
         for (BookingEntity booking : bookings) {

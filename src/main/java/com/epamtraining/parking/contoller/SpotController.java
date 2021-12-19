@@ -14,6 +14,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -29,9 +30,9 @@ public class SpotController {
 
     // TODO кейс: спот, занятый с 9 утра,не попадает в выборку пустых спотов с 8 до 9 утра
     @GetMapping("/free-spots")
-    public List<SpotEntity>  getFreeSpots(@RequestParam("from")
+    public List<SpotEntity> getFreeSpots(@RequestParam("from")
                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDateTime,
-                                          @RequestParam("to")
+                                        @RequestParam("to")
                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDateTime){
         List<SpotEntity> spotBookings = spotService.getFreeSpotsForTimePeriod(fromDateTime, toDateTime);
         return spotBookings;
@@ -47,7 +48,6 @@ public class SpotController {
 
     // TODO all following should be reviewed
     @DeleteMapping("{id}")
-    @RolesAllowed("role_admin")
     public ResponseEntity deleteSpot(@PathVariable Long id) {
         spotService.deleteSpot(id);
         return new ResponseEntity("DELETE Response", HttpStatus.OK);

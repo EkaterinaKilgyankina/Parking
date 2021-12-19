@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -49,27 +47,23 @@ public class SpotServiceImpl implements SpotService {
     }
 
     public List<SpotEntity> getFreeSpotsForTimePeriod(LocalDateTime from, LocalDateTime to) {
-        List<BookingEntity> bookings = bookingRepository.findAll();
-        List<Long> anyBookedSpotId = new ArrayList<>();
-        for (BookingEntity booking: bookings) {
-            anyBookedSpotId.add(booking.getSpotEntity().getId());
-        }
-        List<SpotEntity> freeSpots = new ArrayList<>();
         List<SpotEntity> spots = spotRepository.findAll();
-        for (SpotEntity spot: spots) {
-            if(!anyBookedSpotId.contains(spot.getId())) freeSpots.add(spot);
-        }
+        List<BookingEntity> bookings = bookingRepository.findAll();
+        Set<SpotEntity> busySpots = new HashSet<>();
+
         for (BookingEntity booking: bookings) {
-            if(booking.getBookingTo().isBefore(from) || booking.getBookingFrom().isAfter(to)) {
-                freeSpots.add(spotRepository.findByLocation(booking.getSpotEntity().getLocation()).get());
+            if(!booking.getBookingTo().isBefore(from.plusNanos(1)) && !booking.getBookingFrom().isAfter(to.minusNanos(1))) {
+                busySpots.add(booking.getSpotEntity());
             }
         }
-        Collections.sort(freeSpots, (o1, o2) -> o1.getId().intValue() - o2.getId().intValue());
 
-        return freeSpots;
+        for (SpotEntity busySpot: busySpots) {
+            spots.remove(busySpot);
+        }
+
+        return spots;
     }
 
-    // TODO implement
     @Override
     public List<BookedSpot> getAllBookedSpots(LocalDateTime from, LocalDateTime to) {
         List<BookedSpot> bookedSpots = new ArrayList<>();
@@ -82,7 +76,7 @@ public class SpotServiceImpl implements SpotService {
             spot.setSpotLocation(booking.getSpotEntity().getLocation());
             spot.setFrom(booking.getBookingFrom());
             spot.setTo(booking.getBookingTo());
-            if(!booking.getBookingFrom().isAfter(to) && !booking.getBookingTo().isBefore(from)) {
+            if(!booking.getBookingFrom().isAfter(to.minusNanos(1)) && !booking.getBookingTo().isBefore(from.plusNanos(1))) {
                 bookedSpots.add(spot);
             }
         }

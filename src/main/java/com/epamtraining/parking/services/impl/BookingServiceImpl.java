@@ -61,7 +61,7 @@ class BookingServiceImpl implements BookingService {
         List<BookingEntity> bookings = spot.getBookings();
 
         for (BookingEntity booking : bookings) {
-            if (!booking.getBookingFrom().isAfter(request.getTo()) || !booking.getBookingTo().isBefore(request.getFrom())) {
+            if(!booking.getBookingTo().isBefore(request.getFrom().plusNanos(1)) && !booking.getBookingFrom().isAfter(request.getTo().minusNanos(1))) {
                 throw new ApplicationException("Spot is busy");
             }
         }

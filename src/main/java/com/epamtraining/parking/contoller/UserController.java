@@ -15,9 +15,9 @@ import java.util.List;
 public class UserController {
     private UserService userService;
 
-    @PostMapping("/edit/")
-    public ResponseEntity changeUserRole (@RequestBody ChangeRoleRequest role) {
-        return ResponseEntity.ok(userService.changeUserRole(role));
+    @PostMapping("/edit/{userId}")
+    public ResponseEntity changeUserRole (@RequestBody ChangeRoleRequest role, @PathVariable Long userId) {
+        return ResponseEntity.ok(userService.changeUserRole(userId, role));
     }
 
     // TODO probably we don't need this

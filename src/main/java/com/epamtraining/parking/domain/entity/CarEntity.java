@@ -17,19 +17,25 @@ public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @Column(name = "user_id")
-//    private long userId;
+
     @Column(name = "number")
     private String number;
+
+    @Enumerated(EnumType.STRING)
+    private Status currentStatus;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonIgnore
     UserEntity user;
-    //long userId
 
     @OneToOne(mappedBy = "carEntity")
     @JsonIgnore
     private BookingEntity bookingEntity;
+
+    public enum Status {
+        approved,
+        requested
+    }
 
 }

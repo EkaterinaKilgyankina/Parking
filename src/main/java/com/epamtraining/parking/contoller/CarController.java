@@ -26,4 +26,10 @@ public class CarController {
         carService.deleteCar(id);
         return new ResponseEntity("DELETE Response", HttpStatus.OK);
     }
+
+    @PostMapping("/status/{id}")
+    public ResponseEntity changeStatusToApproved(@PathVariable Long id) {
+        carService.approveStatus(id);
+        return new ResponseEntity("Car is approved", HttpStatus.OK);
+    }
 }

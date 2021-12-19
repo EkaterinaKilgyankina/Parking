@@ -12,7 +12,7 @@ public class UserRequest {
     private long id;
 
     @NotBlank(message = "email is mandatory")
-    @Pattern(regexp = "^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}", message = "invalid email")
+    @Email(message = "should be email format")
     private String email;
 
     @NotBlank(message = "password is mandatory")

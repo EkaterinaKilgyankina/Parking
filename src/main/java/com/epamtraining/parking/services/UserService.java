@@ -16,5 +16,5 @@ public interface UserService {
     public UserEntity getUser(String email);
     public UserEntity registerAdminAccount(UserRequest user);
     public UserEntity registerNewUserAccount(UserRequest user);
-    public String changeUserRole(ChangeRoleRequest role);
+    public String changeUserRole(Long userId, ChangeRoleRequest role);
 }

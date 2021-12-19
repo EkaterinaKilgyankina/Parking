@@ -67,9 +67,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changeUserRole(ChangeRoleRequest role) {
-        String email = role.getEmail();
-        UserEntity correctedUser = userRepository.findByEmail(email).orElseThrow(() -> new ApplicationException("User not found"));
+    public String changeUserRole(Long userId, ChangeRoleRequest role) {
+        UserEntity correctedUser = userRepository.findById(userId).orElseThrow(() -> new ApplicationException("User not found"));
         RoleEntity newRole = roleRepository.findByName(role.getRole());
         if(newRole == null) {
             throw new ApplicationException("Role doesn't exist.");

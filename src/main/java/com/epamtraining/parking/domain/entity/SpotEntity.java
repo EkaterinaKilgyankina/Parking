@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "spot", schema = "public")
 @EqualsAndHashCode(exclude = {"bookings"})
 @ToString(exclude = {"bookings"})
-public class SpotEntity {
+public class SpotEntity implements Comparable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,4 +27,9 @@ public class SpotEntity {
 
     private String location;
 
+    @Override
+    public int compareTo(Object o) {
+        SpotEntity o2 = (SpotEntity) o;
+        return this.getId().intValue() - o2.getId().intValue();
+    }
 }

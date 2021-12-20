@@ -10,11 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserEntity createUser (UserEntity user);
-
-    public List<UserEntity> getAll();
-    public UserEntity getUser(String email);
     public UserEntity registerAdminAccount(UserRequest user);
     public UserEntity registerNewUserAccount(UserRequest user);
-    public String changeUserRole(Long userId, ChangeRoleRequest role);
+    public UserEntity changeUserRole(Long userId, ChangeRoleRequest role);
 }

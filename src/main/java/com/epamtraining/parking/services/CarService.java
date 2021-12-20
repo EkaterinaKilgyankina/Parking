@@ -9,5 +9,5 @@ public interface CarService {
 
     void deleteCar(Long id);
 
-    void approveStatus (Long id);
+    CarEntity approveStatus (Long id);
 }

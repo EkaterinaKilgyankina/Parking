@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class CarRequest {
-    //TODO to ask why annotations do not show the message
+
     @NotBlank(message = "car number is mandatory")
     @Pattern(regexp = "^[АВЕКМНОРСТУХ]\\d{3}(?<!000)[АВЕКМНОРСТУХ]{2}\\d{2,3}$", message = "invalid car number")
     String number;

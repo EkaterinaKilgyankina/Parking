@@ -1,10 +1,14 @@
 package com.epamtraining.parking.contoller;
 
 import com.epamtraining.parking.domain.entity.BookingEntity;
+import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.model.BookingRequest;
 import com.epamtraining.parking.model.BookingRequestForProlonging;
+import com.epamtraining.parking.model.UserRequest;
 import com.epamtraining.parking.services.BookingService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,35 +22,27 @@ import java.util.List;
 public class BookingController {
     private BookingService bookingService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PostMapping
-    public BookingEntity createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
-        return bookingService.createBooking(bookingRequest);
+    public BookingRequest createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
+        return convertToDto(bookingService.createBooking(bookingRequest));
     }
 
-    // TODO как будет отображаться для фронта
-    // в качестве параметра обновленную сущность с измененным временем (booking to)
-    // TODO needs review
-    @PostMapping("/{bookingId}")
-    public BookingEntity prolongBooking(@RequestBody @Valid BookingRequestForProlonging request
-            , @PathVariable Long bookingId) {
-        return bookingService.prolongBooking(request, bookingId);
+    @PutMapping("/{bookingId}")
+    public BookingRequest prolongBooking(@RequestBody @Valid BookingRequestForProlonging request, @PathVariable Long bookingId) {
+        return convertToDto(bookingService.prolongBooking(request, bookingId));
     }
 
-    // TODO needs review
     @DeleteMapping("{id}")
     public ResponseEntity cancelBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return new ResponseEntity("DELETE Response", HttpStatus.OK);
     }
 
-    // TODO do we need these requests?
-    @GetMapping
-    public List<BookingEntity> getAll() {
-        return bookingService.getAll();
-    }
-
-    @GetMapping("/{carNumber}")
-    public BookingEntity getBookingByCarNumber(@PathVariable String carNumber) {
-        return bookingService.getByCarNumber(carNumber);
+    private BookingRequest convertToDto(BookingEntity booking) {
+        BookingRequest bookingDto = modelMapper.map(booking, BookingRequest.class);
+        return bookingDto;
     }
 }

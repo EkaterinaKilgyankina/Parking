@@ -38,23 +38,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity createUser(UserEntity user) {
-        user.setRoles(Collections.singleton(roleRepository.findByName("role_user")));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    @Override
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public UserEntity getUser(String email) {
-        return userRepository.findByEmail(email).get();
-    }
-
-    @Override
     public UserEntity registerNewUserAccount(UserRequest user) {
         if (emailExists(user.getEmail())) {
             throw new ApplicationException("There is an account with that email address: " + user.getEmail());
@@ -67,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changeUserRole(Long userId, ChangeRoleRequest role) {
+    public UserEntity changeUserRole(Long userId, ChangeRoleRequest role) {
         UserEntity correctedUser = userRepository.findById(userId).orElseThrow(() -> new ApplicationException("User not found"));
         RoleEntity newRole = roleRepository.findByName(role.getRole());
         if(newRole == null) {
@@ -76,12 +59,12 @@ public class UserServiceImpl implements UserService {
         List<RoleEntity> newRoles = new ArrayList<>();
         newRoles.add(newRole);
         correctedUser.setRoles(newRoles);
-        userRepository.save(correctedUser);
 
-        return "success";
+        return userRepository.save(correctedUser);
     }
 
     private boolean emailExists(final String email) {
         return userRepository.getUserEntityByEmail(email) != null;
     }
 }
+

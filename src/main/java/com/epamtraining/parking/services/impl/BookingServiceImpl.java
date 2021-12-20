@@ -86,9 +86,6 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public void deleteBooking(Long id) {
-        //SpotEntity spot = spotRepository.findByBookingEntity_Id(id);
-        //spot.setBookingEntity(null);
-        //spotRepository.save(spot);
         BookingEntity booking = bookingRepository.findById(id).get();
         bookingRepository.delete(booking);
     }

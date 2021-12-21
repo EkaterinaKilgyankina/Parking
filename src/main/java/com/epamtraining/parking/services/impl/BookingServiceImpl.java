@@ -48,6 +48,9 @@ class BookingServiceImpl implements BookingService {
     public BookingEntity createBooking(BookingRequest request) {
         CarEntity car = carRepository.findByNumber(request.getCarNumber())
                 .orElseThrow(() -> new ApplicationException("Car not found"));
+        if (car.getCurrentStatus().equals(CarEntity.Status.requested)) {
+            throw new ApplicationException("Car is not yet approved");
+        }
 
         String spotLocation = request.getSpotLocation();
         SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
@@ -56,7 +59,7 @@ class BookingServiceImpl implements BookingService {
         List<BookingEntity> bookings = spot.getBookings();
 
         for (BookingEntity booking : bookings) {
-            if(!booking.getBookingTo().isBefore(request.getFrom().plusNanos(1)) && !booking.getBookingFrom().isAfter(request.getTo().minusNanos(1))) {
+            if (!booking.getBookingTo().isBefore(request.getFrom().plusNanos(1)) && !booking.getBookingFrom().isAfter(request.getTo().minusNanos(1))) {
                 throw new ApplicationException("Spot is busy");
             }
         }

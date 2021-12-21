@@ -18,7 +18,7 @@ public class BookingDurationValidator implements ConstraintValidator<BookingDura
     @Override
     public boolean isValid(BookingRequest request, ConstraintValidatorContext context) {
         long parkingTime = Math.abs(Duration.between(request.getTo(), request.getFrom()).toMinutes());
-        return request.getFrom().isBefore(request.getTo()) && (parkingTime < 1440L && parkingTime > 30L);
+        return request.getFrom().isBefore(request.getTo()) && (parkingTime <= 1440L && parkingTime >= 30L);
     }
 }
 

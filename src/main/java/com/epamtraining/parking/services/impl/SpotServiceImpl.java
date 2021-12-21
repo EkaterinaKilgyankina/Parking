@@ -3,6 +3,7 @@ package com.epamtraining.parking.services.impl;
 import com.epamtraining.parking.domain.entity.BookingEntity;
 import com.epamtraining.parking.domain.entity.SpotEntity;
 import com.epamtraining.parking.domain.entity.UserEntity;
+import com.epamtraining.parking.domain.exception.ApplicationException;
 import com.epamtraining.parking.model.BookedSpot;
 import com.epamtraining.parking.model.SpotRequest;
 import com.epamtraining.parking.repository.BookingRepository;
@@ -47,6 +48,7 @@ public class SpotServiceImpl implements SpotService {
     }
 
     public List<SpotEntity> getFreeSpotsForTimePeriod(LocalDateTime from, LocalDateTime to) {
+        if(to.isBefore(from)) throw new ApplicationException("Entered time is incorrect");
         List<SpotEntity> spots = spotRepository.findAll();
         List<BookingEntity> bookings = bookingRepository.findAll();
         Set<SpotEntity> busySpots = new HashSet<>();
@@ -66,8 +68,9 @@ public class SpotServiceImpl implements SpotService {
 
     @Override
     public List<BookedSpot> getAllBookedSpots(LocalDateTime from, LocalDateTime to) {
-        List<BookedSpot> bookedSpots = new ArrayList<>();
+        if(to.isBefore(from)) throw new ApplicationException("Entered time is incorrect");
 
+        List<BookedSpot> bookedSpots = new ArrayList<>();
         List<BookingEntity> bookings = bookingRepository.findAll();
         for (BookingEntity booking: bookings) {
             BookedSpot spot = new BookedSpot();

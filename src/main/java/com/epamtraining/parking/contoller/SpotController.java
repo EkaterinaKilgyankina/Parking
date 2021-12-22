@@ -1,10 +1,8 @@
 package com.epamtraining.parking.contoller;
 
 import com.epamtraining.parking.domain.entity.SpotEntity;
-import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.model.BookedSpot;
 import com.epamtraining.parking.model.SpotRequest;
-import com.epamtraining.parking.model.UserRequest;
 import com.epamtraining.parking.services.SpotService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,11 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController

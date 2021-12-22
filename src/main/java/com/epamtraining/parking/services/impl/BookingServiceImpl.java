@@ -52,7 +52,6 @@ class BookingServiceImpl implements BookingService {
             throw new ApplicationException("Car is not yet approved");
         }
 
-        String spotLocation = request.getSpotLocation();
         SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 

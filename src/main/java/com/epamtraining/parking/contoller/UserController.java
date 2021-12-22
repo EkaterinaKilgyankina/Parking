@@ -4,14 +4,10 @@ import com.epamtraining.parking.domain.entity.UserEntity;
 import com.epamtraining.parking.model.ChangeRoleRequest;
 import com.epamtraining.parking.model.UserRequest;
 import com.epamtraining.parking.services.UserService;
-import com.sun.xml.bind.v2.schemagen.episode.SchemaBindings;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

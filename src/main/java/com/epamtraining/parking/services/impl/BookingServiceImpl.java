@@ -48,7 +48,6 @@ class BookingServiceImpl implements BookingService {
     @Override
     @Transactional // если больше 1 запросов на запись в базу
     public BookingEntity createBooking(BookingRequest request) {
-        //TODO изменить на поиск по id
         CarEntity car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new ApplicationException("Car not found"));
 
@@ -70,14 +69,22 @@ class BookingServiceImpl implements BookingService {
         BookingEntity carBookings = car.getBookingEntity();
 
         if (carBookings != null) throw new ApplicationException("Spot for this car is already booked.");
-
         BookingEntity booking = new BookingEntity()
                 .setCarEntity(car)
                 .setSpotEntity(spot)
                 .setBookingFrom(request.getFrom())
                 .setBookingTo(request.getTo());
 
-        return bookingRepository.save(booking);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String s = auth.getAuthorities().toString();
+        if (s.substring(1, s.length() - 1).equals("role_user")) {
+            String principal = auth.getPrincipal().toString();
+            if (car.getUser().getEmail().equals(principal)) {
+                return bookingRepository.save(booking);
+            } else throw new ApplicationException("User is allowed to create only his own booking.");
+        } else {
+            return bookingRepository.save(booking);
+        }
     }
 
     @Override
@@ -87,14 +94,25 @@ class BookingServiceImpl implements BookingService {
         LocalDateTime localDateTime = bookingEntity.getBookingTo().plusMinutes(request.getDuration());
         BookingEntity bookingEntity1 = bookingEntity.setBookingTo(localDateTime);
 
-        return bookingRepository.save(bookingEntity1);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String s = auth.getAuthorities().toString();
+        if (s.substring(1, s.length() - 1).equals("role_user")) {
+            CarEntity car = bookingRepository.findById(bookingId).get().getCarEntity();
+            String principal = auth.getPrincipal().toString();
+            if (car.getUser().getEmail().equals(principal)) {
+                return bookingRepository.save(bookingEntity1);
+            } else throw new ApplicationException("User is allowed to prolong only his own booking");
+        } else {
+            return bookingRepository.save(bookingEntity1);
+        }
     }
+
 
     @Override
     public void deleteBooking(Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String s = auth.getAuthorities().toString();
-        if(s.substring(1, s.length() - 1).equals("role_user")) {
+        if (s.substring(1, s.length() - 1).equals("role_user")) {
             CarEntity car = bookingRepository.findById(id).get().getCarEntity();
             String principal = auth.getPrincipal().toString();
             if (car.getUser().getEmail().equals(principal)) {

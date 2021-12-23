@@ -24,7 +24,6 @@ public class SpotEntity implements Comparable {
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "spotEntity")
     @JsonIgnore
     private List<BookingEntity> bookings;
-
     private String location;
 
     @Override

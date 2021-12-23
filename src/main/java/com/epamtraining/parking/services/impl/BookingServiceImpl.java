@@ -46,14 +46,15 @@ class BookingServiceImpl implements BookingService {
     @Override
     @Transactional // если больше 1 запросов на запись в базу
     public BookingEntity createBooking(BookingRequest request) {
-        CarEntity car = carRepository.findByNumber(request.getCarNumber())
+        //TODO изменить на поиск по id
+        CarEntity car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new ApplicationException("Car not found"));
+
         if (car.getCurrentStatus().equals(CarEntity.Status.requested)) {
             throw new ApplicationException("Car is not yet approved");
         }
 
-        String spotLocation = request.getSpotLocation();
-        SpotEntity spot = spotRepository.findByLocation(request.getSpotLocation())
+        SpotEntity spot = spotRepository.findById(request.getSpotId())
                 .orElseThrow(() -> new ApplicationException("Spot not found"));
 
         List<BookingEntity> bookings = spot.getBookings();

@@ -11,6 +11,8 @@ import com.epamtraining.parking.repository.CarRepository;
 import com.epamtraining.parking.repository.SpotRepository;
 import com.epamtraining.parking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,7 +92,18 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public void deleteBooking(Long id) {
-        BookingEntity booking = bookingRepository.findById(id).get();
-        bookingRepository.delete(booking);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String s = auth.getAuthorities().toString();
+        if(s.substring(1, s.length() - 1).equals("role_user")) {
+            CarEntity car = bookingRepository.findById(id).get().getCarEntity();
+            String principal = auth.getPrincipal().toString();
+            if (car.getUser().getEmail().equals(principal)) {
+                BookingEntity booking = bookingRepository.findById(id).get();
+                bookingRepository.delete(booking);
+            } else throw new ApplicationException("User is allowed to delete only his own bookings.");
+        } else {
+            BookingEntity booking = bookingRepository.findById(id).get();
+            bookingRepository.delete(booking);
+        }
     }
 }

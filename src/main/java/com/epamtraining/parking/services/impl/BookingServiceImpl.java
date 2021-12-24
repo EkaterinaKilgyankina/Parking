@@ -95,6 +95,16 @@ class BookingServiceImpl implements BookingService {
         LocalDateTime localDateTime = bookingEntity.getBookingTo().plusMinutes(request.getDuration());
         BookingEntity bookingEntity1 = bookingEntity.setBookingTo(localDateTime);
 
+        SpotEntity spot = spotRepository.findById(bookingEntity.getSpotEntity().getId()).get();
+
+        List<BookingEntity> bookings = spot.getBookings();
+
+        for (BookingEntity booking : bookings) {
+            if (!booking.getBookingTo().isBefore(bookingEntity.getBookingFrom().plusNanos(1)) && !booking.getBookingFrom().isAfter(bookingEntity.getBookingTo().minusNanos(1))) {
+                throw new ApplicationException("Spot is busy");
+            }
+        }
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String s = auth.getAuthorities().toString();
         if (s.substring(1, s.length() - 1).equals("role_user")) {

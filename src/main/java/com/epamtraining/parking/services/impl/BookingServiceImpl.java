@@ -89,6 +89,7 @@ class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingEntity prolongBooking(BookingRequestForProlonging request, Long bookingId) {
+
         BookingEntity bookingEntity = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new ApplicationException("Booking with requested Id does not exist"));
         LocalDateTime localDateTime = bookingEntity.getBookingTo().plusMinutes(request.getDuration());

@@ -27,12 +27,6 @@ public class RegistrationController {
         return convertToDto(userService.registerNewUserAccount(user));
     }
 
-    // TODO probably should be hidden somehow in real world
-    @PostMapping("/admin")
-    public UserRequest registerAdminAccount(@RequestBody @Valid UserRequest user) {
-        return convertToDto(userService.registerAdminAccount(user));
-    }
-
     private UserRequest convertToDto(UserEntity user) {
         UserRequest userDto = modelMapper.map(user, UserRequest.class);
         return userDto;

@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface UserService {
 
-    public UserEntity registerAdminAccount(UserRequest user);
     public UserEntity registerNewUserAccount(UserRequest user);
     public UserEntity changeUserRole(Long userId, ChangeRoleRequest role);
 }

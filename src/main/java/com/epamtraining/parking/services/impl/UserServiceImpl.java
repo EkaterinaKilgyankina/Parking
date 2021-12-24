@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service("userService")
@@ -23,19 +22,6 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
-
-    @Override
-    public UserEntity registerAdminAccount(UserRequest user) {
-        if (emailExists(user.getEmail())) {
-            throw new ApplicationException("There is an account with that email address: " + user.getEmail());
-        }
-        UserEntity userAdmin = new UserEntity();
-        userAdmin.setPassword(passwordEncoder.encode(user.getPassword()));
-        userAdmin.setEmail(user.getEmail());
-        userAdmin.setRoles(Arrays.asList(roleRepository.findByName("role_admin")));
-
-        return userRepository.save(userAdmin);
-    }
 
     @Override
     public UserEntity registerNewUserAccount(UserRequest user) {

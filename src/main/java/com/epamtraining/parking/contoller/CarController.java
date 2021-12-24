@@ -23,10 +23,9 @@ public class CarController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/{userId}")
-    public CarRequest addCar(@RequestBody @Valid CarRequest car,
-                                 @PathVariable Long userId) {
-        return convertToDto(carService.createCar(car, userId));
+    @PostMapping
+    public CarRequest addCar(@RequestBody @Valid CarRequest car) {
+        return convertToDto(carService.createCar(car));
     }
 
     @DeleteMapping("/{id}")

@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.epamtraining.parking.services.impl.AuthHelper.isOwner;
+
 @Service
 class BookingServiceImpl implements BookingService {
     @Autowired
@@ -75,16 +77,9 @@ class BookingServiceImpl implements BookingService {
                 .setBookingFrom(request.getFrom())
                 .setBookingTo(request.getTo());
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String s = auth.getAuthorities().toString();
-        if (s.substring(1, s.length() - 1).equals("role_user")) {
-            String principal = auth.getPrincipal().toString();
-            if (car.getUser().getEmail().equals(principal)) {
-                return bookingRepository.save(booking);
-            } else throw new ApplicationException("User is allowed to create only his own booking.");
-        } else {
+        if(isOwner(car.getUser().getEmail())) {
             return bookingRepository.save(booking);
-        }
+        } else throw new ApplicationException("User is allowed to create only his own booking.");
     }
 
     @Override
@@ -105,34 +100,19 @@ class BookingServiceImpl implements BookingService {
             }
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String s = auth.getAuthorities().toString();
-        if (s.substring(1, s.length() - 1).equals("role_user")) {
-            CarEntity car = bookingRepository.findById(bookingId).get().getCarEntity();
-            String principal = auth.getPrincipal().toString();
-            if (car.getUser().getEmail().equals(principal)) {
+        CarEntity car = bookingRepository.findById(bookingId).get().getCarEntity();
+        if(isOwner(car.getUser().getEmail())) {
                 return bookingRepository.save(bookingEntity1);
-            } else throw new ApplicationException("User is allowed to prolong only his own booking");
-        } else {
-            return bookingRepository.save(bookingEntity1);
-        }
+        } else throw new ApplicationException("User is allowed to prolong only his own booking");
     }
-
 
     @Override
     public void deleteBooking(Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String s = auth.getAuthorities().toString();
-        if (s.substring(1, s.length() - 1).equals("role_user")) {
-            CarEntity car = bookingRepository.findById(id).get().getCarEntity();
-            String principal = auth.getPrincipal().toString();
-            if (car.getUser().getEmail().equals(principal)) {
+        String email = bookingRepository.findById(id).get().getCarEntity().getUser().getEmail();
+        if(isOwner(email)) {
                 BookingEntity booking = bookingRepository.findById(id).get();
                 bookingRepository.delete(booking);
-            } else throw new ApplicationException("User is allowed to delete only his own bookings.");
-        } else {
-            BookingEntity booking = bookingRepository.findById(id).get();
-            bookingRepository.delete(booking);
-        }
+        } else throw new ApplicationException("User is allowed to delete only his own bookings.");
     }
+
 }

@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PutMapping("/edit/{userId}")
+    @PutMapping("/{userId}")
     public UserRequest changeUserRole (@RequestBody ChangeRoleRequest role, @PathVariable Long userId) {
         return convertToDto(userService.changeUserRole(userId, role));
     }

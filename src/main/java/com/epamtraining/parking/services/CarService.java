@@ -5,7 +5,7 @@ import com.epamtraining.parking.model.CarRequest;
 
 public interface CarService {
 
-    CarEntity createCar(CarRequest car, Long userId);
+    CarEntity createCar(CarRequest car);
 
     void deleteCar(Long id);
 

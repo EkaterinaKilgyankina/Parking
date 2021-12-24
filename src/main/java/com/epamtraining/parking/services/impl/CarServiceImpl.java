@@ -10,6 +10,8 @@ import com.epamtraining.parking.services.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.epamtraining.parking.services.impl.AuthHelper.isOwner;
+
 @Service
 @AllArgsConstructor
 public class CarServiceImpl implements CarService {
@@ -17,13 +19,15 @@ public class CarServiceImpl implements CarService {
     private UserRepository userRepository;
 
     @Override
-    public CarEntity createCar(CarRequest car, Long userId) {
-        UserEntity user = userRepository.findById(userId).get();
-        CarEntity carEntity = new CarEntity();
-        carEntity.setUser(user)
-                .setNumber(car.getNumber())
-                .setCurrentStatus(CarEntity.Status.requested);
-        return carRepository.save(carEntity);
+    public CarEntity createCar(CarRequest car) {
+        UserEntity user = userRepository.findById(car.getUserId()).get();
+        if(isOwner(user.getEmail())) {
+            CarEntity carEntity = new CarEntity();
+            carEntity.setUser(user)
+                    .setNumber(car.getNumber())
+                    .setCurrentStatus(CarEntity.Status.requested);
+            return carRepository.save(carEntity);
+        } else throw new ApplicationException("User is allowed to add only his own car.");
     }
 
     @Override

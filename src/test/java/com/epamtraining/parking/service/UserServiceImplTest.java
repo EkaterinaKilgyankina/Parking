@@ -8,7 +8,6 @@ import com.epamtraining.parking.model.UserRequest;
 import com.epamtraining.parking.repository.RoleRepository;
 import com.epamtraining.parking.repository.UserRepository;
 import com.epamtraining.parking.services.impl.UserServiceImpl;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,7 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,11 +69,12 @@ public class UserServiceImplTest {
 
 
     }
-@Test
-    public void registerNewUserWhenEmailAlresyExist() {
-        //TODO правильно ли напрямую бросать исключение или нужно триггерить причину? (email!=null)
-        when(userRepository.getUserEntityByEmail(any())).thenThrow(new ApplicationException("User already exists"));
-        assertThrows(ApplicationException.class, ()->service.registerNewUserAccount(new UserRequest()));
+
+    @Test
+    public void registerNewUserWhenEmailAlreadyExist() {
+        UserRequest request = new UserRequest();
+        when(userRepository.getUserEntityByEmail(any())).thenReturn(new UserEntity());
+        assertThrows(ApplicationException.class, () -> service.registerNewUserAccount(request));
     }
 
     @Test
@@ -94,22 +95,6 @@ public class UserServiceImplTest {
 
     @Test
     public void changeUserRoleWhenUserIdIsNull() {
-        // TODO или здесь правильнее вызывать метод сервиса, чтобы триггерить ошибку?!
-        when(userRepository.findById(any())).thenThrow(new ApplicationException("user is not found"));
-        assertThrows(ApplicationException.class, () -> userRepository.findById(null));
-    }
-
-//    @Test
-//    public void whenIdIsNull_thenExceptionIsThrown() {
-//        assertThrows(InvalidArgumentException.class, () -> Optional
-//                .ofNullable(personRepository.findNameById(null))
-//                .orElseThrow(InvalidArgumentException::new));
-//    }
-
-    @Test
-    public void changeUserRoleWhenUserIdIsNull2() {
-        // TODO или здесь правильнее вызывать метод сервиса, чтобы триггерить ошибку?!
-        when(userRepository.findById(any())).thenThrow(new ApplicationException("user not found"));
         assertThrows(ApplicationException.class, () -> service.changeUserRole(0L, null));
     }
 

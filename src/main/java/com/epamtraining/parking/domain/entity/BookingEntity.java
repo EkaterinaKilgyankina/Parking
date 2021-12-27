@@ -31,8 +31,4 @@ public class BookingEntity {
     @JoinColumn(name = "spot_id")
     private SpotEntity spotEntity;
 
-  /*  @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "spot_id")
-    private SpotEntity spot;*/
-
 }

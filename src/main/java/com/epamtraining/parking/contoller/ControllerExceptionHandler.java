@@ -28,7 +28,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity handle(ApplicationException e) {
 //        return new RestError()
 //                .setMessage(e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new RestError()
                         .setMessage(e.getMessage()));
     }

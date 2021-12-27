@@ -16,11 +16,6 @@ public class SpotEntity implements Comparable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-  /*  @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "bookingId", referencedColumnName = "id")
-    @JsonIgnore
-    private BookingEntity bookingEntity;*/
-
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "spotEntity")
     @JsonIgnore
     private List<BookingEntity> bookings;

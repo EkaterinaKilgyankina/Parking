@@ -93,10 +93,12 @@ class BookingServiceImpl implements BookingService {
         SpotEntity spot = spotRepository.findById(bookingEntity.getSpotEntity().getId()).get();
 
         List<BookingEntity> bookings = spot.getBookings();
-
-        for (BookingEntity booking : bookings) {
-            if (!booking.getBookingTo().isBefore(bookingEntity.getBookingFrom().plusNanos(1)) && !booking.getBookingFrom().isAfter(bookingEntity.getBookingTo().minusNanos(1))) {
-                throw new ApplicationException("Spot is busy");
+        if(bookings.size() > 1) {
+            bookings.remove(bookingEntity);
+            for (BookingEntity booking : bookings) {
+                if (!booking.getBookingTo().isBefore(bookingEntity.getBookingFrom().plusNanos(1)) && !booking.getBookingFrom().isAfter(bookingEntity1.getBookingTo().minusNanos(1))) {
+                    throw new ApplicationException("Spot is busy");
+                }
             }
         }
 
